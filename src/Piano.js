@@ -46,18 +46,18 @@ function Piano(){
     
       return(
           <div className="piano">
-              <Key dataNote="C" type="key white" />
-              <Key dataNote="Db" type="key black" />
-              <Key dataNote="D" type="key white" />
-              <Key dataNote="E" type="key black" />
-              <Key dataNote="Eb" type="key white" />
-              <Key dataNote="F" type="key white" />
-              <Key dataNote="Gb" type="key black" />
-              <Key dataNote="G" type="key white" />
-              <Key dataNote="Ab" type="key black" />
-              <Key dataNote="A" type="key white" />
-              <Key dataNote="Bb" type="key black" />
-              <Key dataNote="B" type="key white" />
+              <Key audio={sampler} dataNote="C" type="key white" />
+              <Key audio={sampler} dataNote="Db" type="key black" />
+              <Key audio={sampler} dataNote="D" type="key white" />
+              <Key audio={sampler} dataNote="E" type="key black" />
+              <Key audio={sampler} dataNote="Eb" type="key white" />
+              <Key audio={sampler} dataNote="F" type="key white" />
+              <Key audio={sampler} dataNote="Gb" type="key black" />
+              <Key audio={sampler} dataNote="G" type="key white" />
+              <Key audio={sampler} dataNote="Ab" type="key black" />
+              <Key audio={sampler} dataNote="A" type="key white" />
+              <Key audio={sampler} dataNote="Bb" type="key black" />
+              <Key audio={sampler} dataNote="B" type="key white" />
           </div>
       )
 }
