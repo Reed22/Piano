@@ -1,5 +1,6 @@
 import React from 'react'
 import * as Tone from 'tone'
+import Key from './Key'
 
 function Piano(){
     const sampler = new Tone.Sampler({
@@ -45,18 +46,18 @@ function Piano(){
     
       return(
           <div className="piano">
-              <div dataNote="C" className="key white"></div>
-              <div dataNote="Db" className="key black"></div>
-              <div dataNote="D" className="key white"></div>
-              <div dataNote="E" className="key black"></div>
-              <div dataNote="Eb" className="key white"></div>
-              <div dataNote="F" className="key white"></div>
-              <div dataNote="Gb" className="key black"></div>
-              <div dataNote="G" className="key white"></div>
-              <div dataNote="Ab" className="key black"></div>
-              <div dataNote="A" className="key white"></div>
-              <div dataNote="Bb" className="key black"></div>
-              <div dataNote="B" className="key white"></div>
+              <Key dataNote="C" type="key white" />
+              <Key dataNote="Db" type="key black" />
+              <Key dataNote="D" type="key white" />
+              <Key dataNote="E" type="key black" />
+              <Key dataNote="Eb" type="key white" />
+              <Key dataNote="F" type="key white" />
+              <Key dataNote="Gb" type="key black" />
+              <Key dataNote="G" type="key white" />
+              <Key dataNote="Ab" type="key black" />
+              <Key dataNote="A" type="key white" />
+              <Key dataNote="Bb" type="key black" />
+              <Key dataNote="B" type="key white" />
           </div>
       )
 }
