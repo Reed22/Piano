@@ -28,6 +28,7 @@ function Key(props){
     function playSound(){
         changePlay()
         props.audio.triggerAttackRelease(props.dataNote + "3", "8n")
+        setTimeout(changePlay, 250)
     }
 
     return(
