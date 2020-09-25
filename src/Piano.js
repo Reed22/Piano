@@ -43,7 +43,7 @@ function Piano(){
       const synth = new Tone.Synth()
       synth.oscillator.type = "sine";
       synth.toMaster();
-    
+
       return(
           <div className="piano">
               <Key audio={sampler} dataNote="C" type="key white" />
