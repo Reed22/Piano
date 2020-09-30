@@ -8,7 +8,6 @@ function Key(props){
     const [color, setColor] = useState(keyColor)
   
     function changeColor(){
-        let newColor
         if(played){
             setColor(playedColor)
         }
@@ -27,8 +26,8 @@ function Key(props){
 
     function playSound(){
         changePlay()
-        props.audio.triggerAttackRelease(props.dataNote + "3", "8n")
-        setTimeout(changePlay, 250)
+        props.audio.triggerAttackRelease(props.dataNote + props.octave, "8n")
+        setTimeout(changePlay, 250) //Probably not the best way to do this
     }
 
     return(

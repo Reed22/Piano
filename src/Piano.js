@@ -1,8 +1,10 @@
-import React from 'react'
+import React, {useState} from 'react'
 import * as Tone from 'tone'
 import Key from './Key'
 
 function Piano(){
+    const [octave, setOctave] = useState("3")
+
     const sampler = new Tone.Sampler({
         urls: {
           A0: "A0.mp3",
@@ -44,21 +46,33 @@ function Piano(){
       synth.oscillator.type = "sine";
       synth.toMaster();
 
+    function changeOctave(event){
+        setOctave(event.target.id)
+    }
+
       return(
-          <div className="piano">
-              <Key audio={sampler} dataNote="C" type="key white" />
-              <Key audio={sampler} dataNote="Db" type="key black" />
-              <Key audio={sampler} dataNote="D" type="key white" />
-              <Key audio={sampler} dataNote="E" type="key black" />
-              <Key audio={sampler} dataNote="Eb" type="key white" />
-              <Key audio={sampler} dataNote="F" type="key white" />
-              <Key audio={sampler} dataNote="Gb" type="key black" />
-              <Key audio={sampler} dataNote="G" type="key white" />
-              <Key audio={sampler} dataNote="Ab" type="key black" />
-              <Key audio={sampler} dataNote="A" type="key white" />
-              <Key audio={sampler} dataNote="Bb" type="key black" />
-              <Key audio={sampler} dataNote="B" type="key white" />
+          <div>
+            <button id="1" onClick={changeOctave}>1</button>
+            <button id="2" onClick={changeOctave}>2</button>
+            <button id="3" onClick={changeOctave}>3</button>
+            <button id="4" onClick={changeOctave}>4</button>
+
+            <div className="piano">
+                <Key octave={octave} audio={sampler} dataNote="C" type="key white" />
+                <Key octave={octave} audio={sampler} dataNote="Db" type="key black" />
+                <Key octave={octave} audio={sampler} dataNote="D" type="key white" />
+                <Key octave={octave} audio={sampler} dataNote="E" type="key black" />
+                <Key octave={octave} audio={sampler} dataNote="Eb" type="key white" />
+                <Key octave={octave} audio={sampler} dataNote="F" type="key white" />
+                <Key octave={octave} audio={sampler} dataNote="Gb" type="key black" />
+                <Key octave={octave} audio={sampler} dataNote="G" type="key white" />
+                <Key octave={octave} audio={sampler} dataNote="Ab" type="key black" />
+                <Key octave={octave} audio={sampler} dataNote="A" type="key white" />
+                <Key octave={octave} audio={sampler} dataNote="Bb" type="key black" />
+                <Key octave={octave} audio={sampler} dataNote="B" type="key white" />
+            </div>
           </div>
+
       )
 }
 
