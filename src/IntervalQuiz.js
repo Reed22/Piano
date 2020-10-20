@@ -1,7 +1,6 @@
 import React,  {useState} from 'react'
 import {Component} from 'react'
 import * as Tone from 'tone'
-import Key from './Key'
 
 class IntervalQuiz extends Component {
     constructor() {
