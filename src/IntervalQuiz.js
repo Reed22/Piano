@@ -26,7 +26,7 @@ class IntervalQuiz extends Component {
             //console.log(this.state.clicked)
         }
         else{
-            if (event.target.id == this.state.played){
+            if (event.target.id === this.state.played){
                 this.setState({
                     grade: "Correct!"
                 }, ()=> {//put prints in callback as set state is async
@@ -70,20 +70,20 @@ class IntervalQuiz extends Component {
             console.log(randomNumber,"rdm")
             console.log(this.state.played,"ply") 
             console.log(this.state.grade,"grd") 
-            if (this.state.played == 1){
+            if (this.state.played === 1){
                 synth.triggerAttackRelease("C4", "4n",now + 1);
             }
-            else if (this.state.played == 2){
+            else if (this.state.played === 2){
                 synth.triggerAttackRelease("D4", "4n", now + 1);
-            }else if (this.state.played == 3){
+            }else if (this.state.played === 3){
                 synth.triggerAttackRelease("E4", "4n", now + 1);
-            }else if(this.state.played == 4){
+            }else if(this.state.played === 4){
                 synth.triggerAttackRelease("F4", "4n", now + 1);
-            }else if(this.state.played == 5){
+            }else if(this.state.played === 5){
                 synth.triggerAttackRelease("G4", "4n", now + 1);
-            }else if (this.state.played == 6){
+            }else if (this.state.played === 6){
                 synth.triggerAttackRelease("A4", "4n", now + 1);
-            }else if(this.state.played == 7){
+            }else if(this.state.played === 7){
                 synth.triggerAttackRelease("B4", "4n", now + 1);
             }
         }
@@ -92,7 +92,7 @@ class IntervalQuiz extends Component {
     render(){
         return(
             <div>
-                <button id="8" onClick={this.handleChange}>Take Interval Quiz</button>
+                <button id="8" onClick={this.handleChange}>Interval Quiz</button>
                 {
                     this.state.clicked  &&
                     <div>
