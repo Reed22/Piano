@@ -1,3 +1,6 @@
+//WEIRD BUG----- IF YOU CHANGE '==' TO '===' IT DOESN'T WORK
+//to fix: if dupliacte answer replace with non duplicate
+
 import React,  {useState} from 'react'
 import {Component} from 'react'
 function     shuffle(a) {
@@ -9,7 +12,8 @@ function     shuffle(a) {
         a[j] = x;
     }
     return a;
-}
+}//cited https://stackoverflow.com/questions/6274339/how-can-i-shuffle-an-array
+
 class TriadQuiz extends Component {
     constructor() {
         super()
@@ -20,9 +24,11 @@ class TriadQuiz extends Component {
             ansB: "",
             ansC: "",
             ansD: "",
-            answer:"",
+            correctAnswer:"",
+            chosenAnswer:"",
             seventh: false,
             randomized: false,
+            gotCorrectAnswer: false,
             chords : {
                 "C major": ["c","e","g"],
                 "D minor": ["d","f","a"], 
@@ -47,12 +53,27 @@ class TriadQuiz extends Component {
 
 
     }
-    handleClick(event){
-        const {name, value, type, checked} = event.target
-        /*type === "checkbox" ? this.setState({ [name]: checked }) : */
-        console.log(event.target)
-        this.setState({ [name]: value })
     
+    handleClick(event){
+        const {value} = event.target
+        /*type === "checkbox" ? this.setState({ [name]: checked }) : */
+        //console.log("here",event.target)
+        var toCheck = ""
+        //create string to check correctness
+        for(var i=0;i<this.state.correctAnswer.length;i++){
+            toCheck += this.state.correctAnswer[i]
+            if (i != (this.state.correctAnswer.length-1)){
+                toCheck +=','
+            }
+        }
+        //console.log("here2",toCheck)
+        this.setState({ chosenAnswer: value },()=>{
+            console.log(toCheck,this.state.chosenAnswer)   // })
+            
+            if (toCheck== this.state.chosenAnswer){
+                this.setState({ gotCorrectAnswer:true })
+            }
+        })
     }
     handleChange(event) {
         console.log("evt    ",event.target.id,"    pld      ", this.state.played)
@@ -89,19 +110,20 @@ class TriadQuiz extends Component {
         var questionA =  Object.keys( chords)[Math.floor(Math.random()*Object.keys( chords).length)]
         this.setState({question:questionA})
         answers.push( chords[questionA])
-        answers = shuffle(answers)
-        console.log(answers)
-        /*var ansB = prevState.chords[Object.keys(prevState.chords)[Math.floor(Math.random()*Object.keys(prevState.chords).length)]],
-        var ansC = prevState.chords[Object.keys(prevState.chords)[Math.floor(Math.random()*Object.keys(prevState.chords).length)]],
-        var  ansD = prevState.chords[Object.keys(prevState.chords)[Math.floor(Math.random()*Object.keys(prevState.chords).length)]]*/
         if (this.state.randomized === true){
             for (i=0;i < answers.length; i++){
                 shuffle(answers[i])
             }
         }
+        this.setState({correctAnswer:answers[3]})
+        answers = shuffle(answers)
+        console.log(answers)
+
+
         return answers
     }
     generateQuestion(event){
+        this.setState({gotCorrectAnswer:false})
         var answers = []    
         if(this.state.seventh == false){
             answers = this.fillQuestions(this.state.chords)
@@ -141,45 +163,51 @@ class TriadQuiz extends Component {
                         <br />
                             <label>
                                 <input 
+                                    id="6"
                                     type="radio" 
-                                    name="answer"
+                                    name="chosenAnswer"
                                     value= {this.state.ansA}
-                                    checked={this.state.answer === this.state.ansA}
+                                    checked={this.state.chosenAnswer == this.state.ansA}
                                     onChange={this.handleClick}
                                 />  {this.state.ansA}
                             </label>
                             <br />
                             <label>
                                 <input 
+                                    id="7"
                                     type="radio" 
-                                    name="answer"
+                                    name="chosenAnswer"
                                     value= {this.state.ansB}
-                                    checked={this.state.answer === this.state.ansB}
+                                    checked={this.state.chosenAnswer == this.state.ansB}
                                     onChange={this.handleClick}
                                 />  {this.state.ansB}
                             </label>
                             <br />
                             <label>
                                 <input 
+                                    id="8"
                                     type="radio" 
-                                    name="answer"
+                                    name="chosenAnswer"
                                     value= {this.state.ansC}
-                                    checked={this.state.answer === this.state.ansC}
+                                    checked={this.state.chosenAnswer == this.state.ansC}
                                     onChange={this.handleClick}
                                 />  {this.state.ansC}
                             </label>
                             <br/>
                             <label>
                                 <input 
+                                    id="9"
                                     type="radio" 
-                                    name="answer"
+                                    name="chosenAnswer"
                                     value= {this.state.ansD}
-                                    checked={this.state.answer === this.state.ansD}
+                                    checked={this.state.chosenAnswer == this.state.ansD}
                                     onChange={this.handleClick}
                                 />  {this.state.ansD}
                             </label>
                             <br />
                         </form>
+                        {this.state.gotCorrectAnswer &&
+                        <header1 id = "5">CORRECT</header1>}
                     </div>
                 }
             </div>
