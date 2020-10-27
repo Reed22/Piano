@@ -26,7 +26,7 @@ class IntervalQuiz extends Component {
             //console.log(this.state.clicked)
         }
         else{
-            if (event.target.id === this.state.played){
+            if (event.target.id == this.state.played){
                 this.setState({
                     grade: "Correct!"
                 }, ()=> {//put prints in callback as set state is async
