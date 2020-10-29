@@ -30,21 +30,26 @@ class TriadQuiz extends Component {
             randomized: false,
             gotCorrectAnswer: false,
             chords : {
-                "C major": ["c","e","g"],
-                "D minor": ["d","f","a"], 
-                "E minor": ["e",'g', 'b'],
-                "F major": ['f','a','c'] ,
-                "G major": ['g','b','d'],
-                "A minor": ['a','c','e'],
-                "B diminished" : ['b','d','f']    },
+                "C major": ["C","E","G"],
+                "D minor": ["D","F","A"], 
+                "E minor": ["E",'G','B'],
+                "F major": ['F','A','C'] ,
+                "G major": ["G",'B','D'],
+                "A minor": ['A','C','E'],
+                "B diminished" : ['B','D','F'],
+                "C# major": ['C#','F','G#'],
+                "D major" : ["D","C#","A"],
+                "C minor" : ["C","Eb","G"],
+                "C diminished" : ["C","Eb","Gb"],
+            },
             seventhChords : {
-                "C major": ["c","e","g","b"],
-                "D minor": ["d","f","a","c"], 
-                "E minor": ["e",'g', 'b','d'],
-                "F major": ['f','a','c','e'] ,
-                "G major": ['g','b','d','f'],
-                "A minor": ['a','c','e','g'],
-                "B diminished" : ['b','d','f','a']    }
+                "C major": ["C","E","G","B"],
+                "D minor": ["D","G","A","C"], 
+                "E minor": ["E",'G','B','D'],
+                "F major": ['F','A','C','E'] ,
+                "G major": ['G','B','D','F'],
+                "A minor": ['A','C','E','G'],
+                "B diminished" : ['B','D','F','A']    }
         }
         this.handleChange = this.handleChange.bind(this)
         this.generateQuestion = this.generateQuestion.bind(this)
@@ -138,10 +143,6 @@ class TriadQuiz extends Component {
                 ansB : answers[0],
                 ansC : answers[1],
                 ansD : answers[2],
-/*
-                ansB : prevState.chords[Object.keys(prevState.chords)[Math.floor(Math.random()*Object.keys(prevState.chords).length)]],
-                ansC : prevState.chords[Object.keys(prevState.chords)[Math.floor(Math.random()*Object.keys(prevState.chords).length)]],
-                ansD : prevState.chords[Object.keys(prevState.chords)[Math.floor(Math.random()*Object.keys(prevState.chords).length)]]*/
             }
         }, ()=> {
             console.log(this.state,"qstion") 
