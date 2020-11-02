@@ -34,3 +34,19 @@ body {
     /*background-color: white;*/
     border: 1px solid #333;
 }
+.wrapper {
+    display: grid;
+    grid-template-columns: 7% 7% 7% 7% 7% 7% 7% 7% 7% 7% 7% 7% 7%;
+    grid-template-rows: 12% 12% 12% 12% 12% 12% 12%;
+    grid-gap: 5px;
+    background-color: #fff;
+    color: #444;
+  }
+  
+  .box {
+    background-color: #444;
+    color: #fff;
+    border-radius: 5px;
+    padding: 20px;
+    font-size: 150%;
+  }
