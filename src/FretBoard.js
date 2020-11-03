@@ -8,17 +8,18 @@ class FretBoard extends Component {
         super()
         this.state = {
             clicked : false,
-            played : null,
-            grade : null
+            grade : null,
+            startQuiz:false
         }
         this.handleChange = this.handleChange.bind(this)
-        this.playNote = this.playNote.bind(this)
+        this.handleClick = this.handleClick.bind(this)
 
     }
-    
+    handleClick(event){
+        console.log(event.target.dataset.value)//.dataValue)
+    }
     handleChange(event) {
-        console.log("evt    ",event.target.id,"    pld      ", this.state.played)
-        if (event.target.id == 8 ||event.target.id == 10){
+        if (event.target.id == 1){
             this.setState(prevState =>{
                 return {
                     clicked: !(prevState.clicked)
@@ -26,8 +27,16 @@ class FretBoard extends Component {
             })
             //console.log(this.state.clicked)
         }
-        else{
-            if (event.target.id == this.state.played){
+        else if (event.target.id == 2){
+            this.setState(prevState =>{
+                return {
+                    startQuiz: !(prevState.startQuiz)
+                }
+            })
+            //console.log(this.state.clicked)
+        }
+        /*else{
+            if (event.target.id == 2){
                 this.setState({
                     grade: "Correct!"
                 }, ()=> {//put prints in callback as set state is async
@@ -46,50 +55,11 @@ class FretBoard extends Component {
                 )
             }
 
-        }
+        }*/
 
     }
     
-    playNote(){
-        const synth = new Tone.Synth().toDestination();
-        //play a middle 'C' for the duration of an 8th note
-        const now = Tone.now()
-        synth.triggerAttackRelease("C4", "4n",now);
-
-        this.setState({
-            grade:null
-        })  
-        this.setState({
-            played:null
-        }) 
-        var maximum = 7
-        var minimum = 1
-        var randomNumber = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum
-        this.setState({
-            played: randomNumber
-        }, ()=> {//put prints in callback as set state is async
-            console.log(randomNumber,"rdm")
-            console.log(this.state.played,"ply") 
-            console.log(this.state.grade,"grd") 
-            if (this.state.played === 1){
-                synth.triggerAttackRelease("C4", "4n",now + 1);
-            }
-            else if (this.state.played === 2){
-                synth.triggerAttackRelease("D4", "4n", now + 1);
-            }else if (this.state.played === 3){
-                synth.triggerAttackRelease("E4", "4n", now + 1);
-            }else if(this.state.played === 4){
-                synth.triggerAttackRelease("F4", "4n", now + 1);
-            }else if(this.state.played === 5){
-                synth.triggerAttackRelease("G4", "4n", now + 1);
-            }else if (this.state.played === 6){
-                synth.triggerAttackRelease("A4", "4n", now + 1);
-            }else if(this.state.played === 7){
-                synth.triggerAttackRelease("B4", "4n", now + 1);
-            }
-        }
-    
-    )} 
+  //  playNote(){ } 
     render(){
 /*        const wrapper ={
             display: "grid",
@@ -100,7 +70,7 @@ class FretBoard extends Component {
             color: "#444",
           }
           
-          const box = {
+          const fretboard-box = {
             backgroundColor:" #444",
             color: "#fff",
             borderRadius:" 5px",
@@ -109,87 +79,206 @@ class FretBoard extends Component {
           }*/
         return(
             <div>
-            <div className="wrapper">
-  <div class="box a">A</div>
-  <div class="box b">B</div>
-  <div class="box c">C</div>
-  <div class="box d">D</div>
-  <div class="box e">E</div>
-  <div class="box f">F</div>
-  <div class="box a">A</div>
-  <div class="box b">B</div>
-  <div class="box c">C</div>
-  <div class="box d">D</div>
-  <div class="box e">E</div>
-  <div class="box f">F</div>
-  <div class="box a">A</div>
-  <div class="box b">B</div>
-  <div class="box c">C</div>
-  <div class="box d">D</div>
-  <div class="box e">E</div>
-  <div class="box f">F</div>
-  <div class="box a">A</div>
-  <div class="box b">B</div>
-  <div class="box c">C</div>
-  <div class="box d">D</div>
-  <div class="box e">E</div>
-  <div class="box f">F</div>
-  <div class="box a">A</div>
-  <div class="box b">B</div>
-  <div class="box c">C</div>
-  <div class="box d">D</div>
-  <div class="box e">E</div>
-  <div class="box f">F</div>
-  <div class="box a">A</div>
-  <div class="box b">B</div>
-  <div class="box c">C</div>
-  <div class="box d">D</div>
-  <div class="box e">E</div>
-  <div class="box f">F</div>
-  <div class="box a">A</div>
-  <div class="box b">B</div>
-  <div class="box c">C</div>
-  <div class="box d">D</div>
-  <div class="box e">E</div>
-  <div class="box f">F</div>
-  <div class="box a">A</div>
-  <div class="box b">B</div>
-  <div class="box c">C</div>
-  <div class="box d">D</div>
-  <div class="box e">E</div>
-  <div class="box f">F</div>
-  <div class="box a">A</div>
-  <div class="box b">B</div>
-  <div class="box c">C</div>
-  <div class="box d">D</div>
-  <div class="box e">E</div>
-  <div class="box f">F</div>
-  <div class="box a">A</div>
-  <div class="box b">B</div>
-  <div class="box c">C</div>
-  <div class="box d">D</div>
-  <div class="box e">E</div>
-  <div class="box f">F</div>
-  <div class="box a">A</div>
-  <div class="box b">B</div>
-  <div class="box c">C</div>
-  <div class="box d">D</div>
-  <div class="box e">E</div>
-  <div class="box f">F</div>
-  <div class="box a">A</div>
-  <div class="box b">B</div>
-  <div class="box c">C</div>
-  <div class="box d">D</div>
-  <div class="box e">E</div>
-  <div class="box f">F</div>
-  <div class="box a">A</div>
-  <div class="box b">B</div>
-  <div class="box c">C</div>
-  <div class="box d">D</div>
-  <div class="box e">E</div>
-  <div class="box f">F</div>
-</div>
+                <button id="1" onClick={this.handleChange}>Show Fretboard</button>
+                {this.state.clicked  &&
+                <div class="fretboard-wrapper">
+                    <div data-value = "E" class="fretboard-box fretboard-open">E</div>
+                    <div class="fretboard-box">F</div>
+                    <div class="fretboard-box">F#/Gb</div>
+                    <div class="fretboard-box">G</div>
+                    <div class="fretboard-box">G#/Ab</div>
+                    <div class="fretboard-box">A</div>
+                    <div class="fretboard-box">A#/Bb</div>
+                    <div class="fretboard-box">B</div>
+                    <div class="fretboard-box">C</div>
+                    <div class="fretboard-box">C#/Db</div>
+                    <div class="fretboard-box">D</div>
+                    <div class="fretboard-box">D#/Eb</div>
+                    <div class="fretboard-box">E</div>
 
+
+
+                    <div class="fretboard-box fretboard-open">A</div>
+                    <div class="fretboard-box">A#/Bb</div>
+                    <div class="fretboard-box">B</div>
+                    <div class="fretboard-box">C</div>
+                    <div class="fretboard-box">C#/Db</div>
+                    <div class="fretboard-box">D</div>
+                    <div class="fretboard-box">D#/Eb</div>
+                    <div class="fretboard-box">E</div>
+                    <div class="fretboard-box">F</div>
+                    <div class="fretboard-box">F#/Gb</div>
+                    <div class="fretboard-box">G</div>
+                    <div class="fretboard-box">G#/Ab</div>
+                    <div class="fretboard-box">A</div>
+
+
+
+                    <div class="fretboard-box fretboard-open">D</div>
+                    <div class="fretboard-box">D#/Eb</div>
+                    <div class="fretboard-box">E</div>
+                    <div class="fretboard-box">F</div>
+                    <div class="fretboard-box">F#/Gb</div>
+                    <div class="fretboard-box">G</div>
+                    <div class="fretboard-box">G#/Ab</div>
+                    <div class="fretboard-box">A</div>
+                    <div class="fretboard-box">A#/Bb</div>
+                    <div class="fretboard-box">B</div>
+                    <div class="fretboard-box">C</div>
+                    <div class="fretboard-box">C#/Db</div>
+                    <div class="fretboard-box">D</div>
+
+
+                    <div class="fretboard-box fretboard-open">G</div>
+                    <div class="fretboard-box">G#/Ab</div>
+                    <div class="fretboard-box">A</div>
+                    <div class="fretboard-box">A#/Bb</div>
+                    <div class="fretboard-box">B</div>
+                    <div class="fretboard-box">C</div>
+                    <div class="fretboard-box">C#/Db</div>
+                    <div class="fretboard-box">D</div>
+                    <div class="fretboard-box">D#/Eb</div>
+                    <div class="fretboard-box">E</div>
+                    <div class="fretboard-box">F</div>
+                    <div class="fretboard-box">F#/Gb</div>
+                    <div class="fretboard-box">G</div>
+
+
+
+
+                    <div class="fretboard-box fretboard-open">B</div>
+                    <div class="fretboard-box">C</div>
+                    <div class="fretboard-box">C#/Db</div>
+                    <div class="fretboard-box">D</div>
+                    <div class="fretboard-box">D#/Eb</div>
+                    <div class="fretboard-box">E</div>
+                    <div class="fretboard-box">F</div>
+                    <div class="fretboard-box">F#/Gb</div>
+                    <div class="fretboard-box">G</div>
+                    <div class="fretboard-box">G#/Ab</div>
+                    <div class="fretboard-box">A</div>
+                    <div class="fretboard-box">A#/Bb</div>
+                    <div class="fretboard-box">B</div>
+
+
+
+                    <div class="fretboard-box fretboard-open">E</div>
+                    <div class="fretboard-box">F</div>
+                    <div class="fretboard-box">F#/Gb</div>
+                    <div class="fretboard-box">G</div>
+                    <div class="fretboard-box">G#/Ab</div>
+                    <div class="fretboard-box">A</div>
+                    <div class="fretboard-box">A#/Bb</div>
+                    <div class="fretboard-box">B</div>
+                    <div class="fretboard-box">C</div>
+                    <div class="fretboard-box">C#/Db</div>
+                    <div class="fretboard-box">D</div>
+                    <div class="fretboard-box">D#/Eb</div>
+                    <div class="fretboard-box">E</div>
+
+
+  
+                </div>
+                }
+                <button id="2" onClick={this.handleChange}>Take Fretboard Quiz</button>
+                {this.state.startQuiz  &&
+                <div className="fretboard-wrapper">
+                    <div data-value = "E" class="fretboard-box fretboard-open">E</div>
+                    <div class="fretboard-box" onClick={this.handleClick} data-value = "F"></div>
+                    <div class="fretboard-box" onClick={this.handleClick} data-value = "F#/Gb"></div>
+                    <div class="fretboard-box" onClick={this.handleClick} data-value = "G"></div>
+                    <div class="fretboard-box" onClick={this.handleClick} data-value = "G#/Ab"></div>
+                    <div class="fretboard-box" onClick={this.handleClick} data-value = "A"></div>
+                    <div class="fretboard-box" onClick={this.handleClick} data-value = "A#/Bb"></div>
+                    <div class="fretboard-box" onClick={this.handleClick} data-value = "B"></div>
+                    <div class="fretboard-box" onClick={this.handleClick} data-value = "C"></div>
+                    <div class="fretboard-box" onClick={this.handleClick} data-value = "C#/Db"></div>
+                    <div class="fretboard-box" onClick={this.handleClick} data-value = "D"></div>
+                    <div class="fretboard-box" onClick={this.handleClick} data-value = "D#/Eb"></div>
+                    <div class="fretboard-box" onClick={this.handleClick} data-value = "E"></div>
+
+
+
+                    <div class="fretboard-box fretboard-open"onClick={this.handleClick} data-value = "A">A</div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "A#/Bb"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "B"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "C"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "C#/Db"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "D"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "D#/Eb"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "E"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "F"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "F#/Gb"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "G"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "G#/Ab"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "A"></div>
+
+
+
+                    <div class="fretboard-box fretboard-open"onClick={this.handleClick} data-value = "D">D</div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "D#/Eb"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "E"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "F"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "F#/Gb"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "G"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "G#/Ab"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "A"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "A#/Bb"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "B"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "C"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "C#/Db"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "D"></div>
+
+
+                    <div class="fretboard-box fretboard-open"onClick={this.handleClick} data-value = "G">G</div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "G#/Ab"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "A"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "A#/Bb"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "B"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "C"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "C#/Db"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "D"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "D#/Eb"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "E"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "F"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "F#/Gb"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "G"></div>
+
+
+
+                    <div class="fretboard-box fretboard-open"onClick={this.handleClick} data-value = "B">B</div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "C"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "C#/Db"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "D"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "D#/Eb"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "E"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "F"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "F#/Gb"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "G"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "G#/Ab"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "A"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "A#/Bb"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "B"></div>
+
+
+
+                    <div class="fretboard-box fretboard-open"onClick={this.handleClick} data-value = "E">E</div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "F"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "F#/Gb"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "G"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "G#/Ab"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "A"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "A#/Bb"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "B"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "C"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "C#/Db"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "D"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "D#/Eb"></div>
+                    <div class="fretboard-box"onClick={this.handleClick} data-value = "E"></div>
+
+  
+                </div>
+                }
             </div>
          
         )
