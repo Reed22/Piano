@@ -1,6 +1,7 @@
 import React,  {useState} from 'react'
 import {Component} from 'react'
 import * as Tone from 'tone'
+import FretboardNote from './FretboardNote'
 //import styles from './fret.module.css'
 
 class FretBoard extends Component {
@@ -14,7 +15,8 @@ class FretBoard extends Component {
             currentNote:"",
             noteIds:[],
             noteColor: "fretboard-box",
-            noteColorFound : ""
+            noteColorFound : "fretboard-box-green"
+
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleClick = this.handleClick.bind(this)
@@ -59,28 +61,6 @@ class FretBoard extends Component {
             },()=>{this.createQuiz()})
             //console.log(this.state.clicked)
         }
-        /*else{
-            if (event.target.id == 2){
-                this.setState({
-                    grade: "Correct!"
-                }, ()=> {//put prints in callback as set state is async
-                    console.log(this.state,"grd") 
-                    }
-                )
-            }
-            else{
-                this.setState({
-                    grade: "Wrong, answer is "+ String(this.state.played)
-                }, ()=> {//put prints in callback as set state is async
-
-                    console.log(this.state,"grd") 
-        
-                    }
-                )
-            }
-
-        }*/
-
     }
      
     render(){
@@ -95,7 +75,7 @@ class FretBoard extends Component {
                     <h3>Notes Found = {this.state.noteSelectionCount}</h3>
                     <div className="fretboard-wrapper">
                         <div data-value = "E" id="1-0" class="fretboard-box fretboard-open">E</div>
-                        <div class={this.state.noteColor} id="1-1" onClick={this.handleClick} data-value = "F"></div>
+                        <FretboardNote note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
                         <div class={this.state.noteColor} id="1-2" onClick={this.handleClick} data-value = "F#/Gb"></div>
                         <div class={this.state.noteColor} id="1-3"onClick={this.handleClick} data-value = "G"></div>
                         <div class={this.state.noteColor} id="1-4"onClick={this.handleClick} data-value = "G#/Ab"></div>
