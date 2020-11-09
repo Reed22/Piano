@@ -50,4 +50,11 @@ body {
     padding: 20px;
     font-size: 150%;
   }
+  .fretboard-box-green {
+    background-color: #444;
+    color: rgb(58, 236, 13);
+    border-radius: 5px;
+    padding: 20px;
+    font-size: 150%;
+  }
   .fretboard-open{border-radius:30px;color: red}
