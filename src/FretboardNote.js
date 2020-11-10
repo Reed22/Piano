@@ -21,8 +21,8 @@ class FretboardNote extends Component {
     render(){
 
         return(
-            <div id= {this.props.id} onClick= {this.handleClick} note={this.props.note} class = {this.state.active ? "fretboard-box-green" : "fretboard-box"}>
-                <p>{this.props.note}</p>
+            <div id= {this.props.id} onClick= {this.handleClick} /*note={this.props.note}*/ class = {this.state.active ? "fretboard-box-green" : "fretboard-box"}>
+                <p>{/*this.props.note*/}</p>
             </div>
          
         )

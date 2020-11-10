@@ -76,96 +76,100 @@ class FretBoard extends Component {
                     <div className="fretboard-wrapper">
                         <div data-value = "E" id="1-0" class="fretboard-box fretboard-open">E</div>
                         <FretboardNote note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
-                        <div class={this.state.noteColor} id="1-2" onClick={this.handleClick} data-value = "F#/Gb"></div>
-                        <div class={this.state.noteColor} id="1-3"onClick={this.handleClick} data-value = "G"></div>
-                        <div class={this.state.noteColor} id="1-4"onClick={this.handleClick} data-value = "G#/Ab"></div>
-                        <div class={this.state.noteColor} id="1-5"onClick={this.handleClick} data-value = "A"></div>
-                        <div class={this.state.noteColor} id="1-6"onClick={this.handleClick} data-value = "A#/Bb"></div>
-                        <div class={this.state.noteColor} id="1-7"onClick={this.handleClick} data-value = "B"></div>
-                        <div class={this.state.noteColor} id="1-8"onClick={this.handleClick} data-value = "C"></div>
-                        <div class={this.state.noteColor} id="1-9"onClick={this.handleClick} data-value = "C#/Db"></div>
-                        <div class={this.state.noteColor} id="1-10"onClick={this.handleClick} data-value = "D"></div>
-                        <div class={this.state.noteColor} id="1-11"onClick={this.handleClick} data-value = "D#/Eb"></div>
-                        <div class={this.state.noteColor} id="1-12"onClick={this.handleClick} data-value = "E"></div>
+                        <FretboardNote note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
+                        <FretboardNote note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
+                        <FretboardNote note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
+                        <FretboardNote note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
+                        <FretboardNote note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
+                        <FretboardNote note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
+                        <FretboardNote note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
+                        <FretboardNote note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
+                        <FretboardNote note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
+                        <FretboardNote note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
+                        <FretboardNote note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
 
 
 
                         <div class="fretboard-box fretboard-open"id="2-0" onClick={this.handleClick} data-value = "A">A</div>
-                        <div class={this.state.noteColor} id="2-1"onClick={this.handleClick} data-value = "A#/Bb"></div>
-                        <div class={this.state.noteColor}id="2-2"onClick={this.handleClick} data-value = "B"></div>
-                        <div class={this.state.noteColor}id="2-3"onClick={this.handleClick} data-value = "C"></div>
-                        <div class={this.state.noteColor}id="2-4"onClick={this.handleClick} data-value = "C#/Db"></div>
-                        <div class={this.state.noteColor}id="2-5"onClick={this.handleClick} data-value = "D"></div>
-                        <div class={this.state.noteColor}id="2-6"onClick={this.handleClick} data-value = "D#/Eb"></div>
-                        <div class={this.state.noteColor}id="2-7"onClick={this.handleClick} data-value = "E"></div>
-                        <div class={this.state.noteColor}id="2-8"onClick={this.handleClick} data-value = "F"></div>
-                        <div class={this.state.noteColor}id="2-9"onClick={this.handleClick} data-value = "F#/Gb"></div>
-                        <div class={this.state.noteColor}id="2-10"onClick={this.handleClick} data-value = "G"></div>
-                        <div class={this.state.noteColor}id="2-11"onClick={this.handleClick} data-value = "G#/Ab"></div>
-                        <div class={this.state.noteColor}id="2-12"onClick={this.handleClick} data-value = "A"></div>
-
+                        <FretboardNote note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
+                        <FretboardNote note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
+                        <FretboardNote note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
+                        <FretboardNote note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
+                        <FretboardNote note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
+                        <FretboardNote note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
+                        <FretboardNote note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
+                        <FretboardNote note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
+                        <FretboardNote note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
+                        <FretboardNote note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
+                        <FretboardNote note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
+                        <FretboardNote note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
+        
 
 
                         <div class="fretboard-box fretboard-open"id="3-0"onClick={this.handleClick} data-value = "D">D</div>
-                        <div class={this.state.noteColor}id="3-1"onClick={this.handleClick} data-value = "D#/Eb"></div>
-                        <div class={this.state.noteColor}id="3-2"onClick={this.handleClick} data-value = "E"></div>
-                        <div class={this.state.noteColor}id="3-3"onClick={this.handleClick} data-value = "F"></div>
-                        <div class={this.state.noteColor}id="3-4"onClick={this.handleClick} data-value = "F#/Gb"></div>
-                        <div class={this.state.noteColor}id="3-5"onClick={this.handleClick} data-value = "G"></div>
-                        <div class={this.state.noteColor}id="3-6"onClick={this.handleClick} data-value = "G#/Ab"></div>
-                        <div class={this.state.noteColor}id="3-7"onClick={this.handleClick} data-value = "A"></div>
-                        <div class={this.state.noteColor}id="3-8"onClick={this.handleClick} data-value = "A#/Bb"></div>
-                        <div class={this.state.noteColor}id="3-9"onClick={this.handleClick} data-value = "B"></div>
-                        <div class={this.state.noteColor}id="3-10"onClick={this.handleClick} data-value = "C"></div>
-                        <div class={this.state.noteColor}id="3-11"onClick={this.handleClick} data-value = "C#/Db"></div>
-                        <div class={this.state.noteColor}id="3-12"onClick={this.handleClick} data-value = "D"></div>
+                        <FretboardNote note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
+                        <FretboardNote note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
+                        <FretboardNote note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
+                        <FretboardNote note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
+                        <FretboardNote note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
+                        <FretboardNote note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
+                        <FretboardNote note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
+                        <FretboardNote note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
+                        <FretboardNote note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
+                        <FretboardNote note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
+                        <FretboardNote note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
+                        <FretboardNote note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
+      
+
+
 
 
                         <div class="fretboard-box fretboard-open"id="4-0"onClick={this.handleClick} data-value = "G">G</div>
-                        <div class={this.state.noteColor}id="4-1"onClick={this.handleClick} data-value = "G#/Ab"></div>
-                        <div class={this.state.noteColor}id="4-2"onClick={this.handleClick} data-value = "A"></div>
-                        <div class={this.state.noteColor}id="4-3"onClick={this.handleClick} data-value = "A#/Bb"></div>
-                        <div class={this.state.noteColor}id="4-4"onClick={this.handleClick} data-value = "B"></div>
-                        <div class={this.state.noteColor}id="4-5"onClick={this.handleClick} data-value = "C"></div>
-                        <div class={this.state.noteColor}id="4-6"onClick={this.handleClick} data-value = "C#/Db"></div>
-                        <div class={this.state.noteColor}id="4-7"onClick={this.handleClick} data-value = "D"></div>
-                        <div class={this.state.noteColor}id="4-8"onClick={this.handleClick} data-value = "D#/Eb"></div>
-                        <div class={this.state.noteColor}id="4-9"onClick={this.handleClick} data-value = "E"></div>
-                        <div class={this.state.noteColor}id="4-10"onClick={this.handleClick} data-value = "F"></div>
-                        <div class={this.state.noteColor}id="4-11"onClick={this.handleClick} data-value = "F#/Gb"></div>
-                        <div class={this.state.noteColor}id="4-12"onClick={this.handleClick} data-value = "G"></div>
-
+                        <FretboardNote note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
+                        <FretboardNote note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
+                        <FretboardNote note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
+                        <FretboardNote note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
+                        <FretboardNote note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
+                        <FretboardNote note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
+                        <FretboardNote note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
+                        <FretboardNote note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
+                        <FretboardNote note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
+                        <FretboardNote note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
+                        <FretboardNote note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
+                        <FretboardNote note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
+                  
 
 
                         <div class="fretboard-box fretboard-open"id="5-0"onClick={this.handleClick} data-value = "B">B</div>
-                        <div class={this.state.noteColor}id="5-1"onClick={this.handleClick} data-value = "C"></div>
-                        <div class={this.state.noteColor}id="5-2"onClick={this.handleClick} data-value = "C#/Db"></div>
-                        <div class={this.state.noteColor}id="5-3"onClick={this.handleClick} data-value = "D"></div>
-                        <div class={this.state.noteColor}id="5-4"onClick={this.handleClick} data-value = "D#/Eb"></div>
-                        <div class={this.state.noteColor}id="5-5"onClick={this.handleClick} data-value = "E"></div>
-                        <div class={this.state.noteColor}id="5-6"onClick={this.handleClick} data-value = "F"></div>
-                        <div class={this.state.noteColor}id="5-7"onClick={this.handleClick} data-value = "F#/Gb"></div>
-                        <div class={this.state.noteColor}id="5-8"onClick={this.handleClick} data-value = "G"></div>
-                        <div class={this.state.noteColor}id="5-9"onClick={this.handleClick} data-value = "G#/Ab"></div>
-                        <div class={this.state.noteColor}id="5-10"onClick={this.handleClick} data-value = "A"></div>
-                        <div class={this.state.noteColor}id="5-11"onClick={this.handleClick} data-value = "A#/Bb"></div>
-                        <div class={this.state.noteColor}id="5-12"onClick={this.handleClick} data-value = "B"></div>
+                        <FretboardNote note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
+                        <FretboardNote note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
+                        <FretboardNote note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
+                        <FretboardNote note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
+                        <FretboardNote note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
+                        <FretboardNote note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
+                        <FretboardNote note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
+                        <FretboardNote note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
+                        <FretboardNote note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
+                        <FretboardNote note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
+                        <FretboardNote note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
+                        <FretboardNote note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
+         
 
 
+                        <div data-value = "E" id="1-0" class="fretboard-box fretboard-open">E</div>
+                        <FretboardNote note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
+                        <FretboardNote note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
+                        <FretboardNote note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
+                        <FretboardNote note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
+                        <FretboardNote note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
+                        <FretboardNote note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
+                        <FretboardNote note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
+                        <FretboardNote note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
+                        <FretboardNote note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
+                        <FretboardNote note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
+                        <FretboardNote note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
+                        <FretboardNote note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
 
-                        <div class="fretboard-box fretboard-open"id="6-0"onClick={this.handleClick} data-value = "E">E</div>
-                        <div class={this.state.noteColor}id="6-1"onClick={this.handleClick} data-value = "F"></div>
-                        <div class={this.state.noteColor}id="6-2"onClick={this.handleClick} data-value = "F#/Gb"></div>
-                        <div class={this.state.noteColor}id="6-3"onClick={this.handleClick} data-value = "G"></div>
-                        <div class={this.state.noteColor}id="6-4"onClick={this.handleClick} data-value = "G#/Ab"></div>
-                        <div class={this.state.noteColor}id="6-5"onClick={this.handleClick} data-value = "A"></div>
-                        <div class={this.state.noteColor}id="6-6"onClick={this.handleClick} data-value = "A#/Bb"></div>
-                        <div class={this.state.noteColor}id="6-7"onClick={this.handleClick} data-value = "B"></div>
-                        <div class={this.state.noteColor}id="6-8"onClick={this.handleClick} data-value = "C"></div>
-                        <div class={this.state.noteColor}id="6-9"onClick={this.handleClick} data-value = "C#/Db"></div>
-                        <div class={this.state.noteColor}id="6-10"onClick={this.handleClick} data-value = "D"></div>
-                        <div class={this.state.noteColor}id="6-11"onClick={this.handleClick} data-value = "D#/Eb"></div>
-                        <div class={this.state.noteColor}id="6-12"onClick={this.handleClick} data-value = "E"></div>
 
     
                     </div>
