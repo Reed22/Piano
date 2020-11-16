@@ -1,8 +1,7 @@
 import React,  {useState} from 'react'
 import {Component} from 'react'
 import * as Tone from 'tone'
-import FretboardNote from './FretboardNote'
-//import styles from './fret.module.css'
+import FretBoardNote from './FretboardNote'
 
 class FretBoard extends Component {
     constructor() {
@@ -15,7 +14,8 @@ class FretBoard extends Component {
             currentNote:"",
             noteIds:[],
             noteColor: "fretboard-box",
-            noteColorFound : "fretboard-box-green"
+            noteColorFound : "fretboard-box-green",
+            displayNote:false
 
         }
         this.handleChange = this.handleChange.bind(this)
@@ -59,7 +59,16 @@ class FretBoard extends Component {
                     noteIds:[]
                 }
             },()=>{this.createQuiz()})
-            //console.log(this.state.clicked)
+        }
+        else if (event.target.id == 4){
+            this.setState(prevState =>{
+                return {
+                    displayNote :!prevState.displayNote
+                }
+            }, ()=> {
+                console.log(this.state.displayNote,"qstion") 
+            })          
+        
         }
     }
      
@@ -68,236 +77,116 @@ class FretBoard extends Component {
         return(
             <div>
 
-                <button id="2" onClick={this.handleChange}>Take Fretboard Quiz</button>
+                <button id="2" onClick={this.handleChange}>Start Fretboard Quiz</button>
                 {this.state.startQuiz  &&
                 <div>
                     <h3 id="3">Click All 6 {this.state.currentNote} Notes on the Fretboard</h3>
-                    <h3>Notes Found = {this.state.noteSelectionCount}</h3>
+                    <h3>Notes Found = {this.state.noteSelectionCount}</h3>                 
+                    <button id="4" onClick={this.handleChange}>Display Notes</button>
                     <div className="fretboard-wrapper">
                         <div data-value = "E" id="1-0" class="fretboard-box fretboard-open">E</div>
-                        <FretboardNote note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
-                        <FretboardNote note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
-                        <FretboardNote note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
-                        <FretboardNote note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
-                        <FretboardNote note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
-                        <FretboardNote note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
-                        <FretboardNote note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
-                        <FretboardNote note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
-                        <FretboardNote note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
-                        <FretboardNote note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
-                        <FretboardNote note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
-                        <FretboardNote note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
 
 
 
                         <div class="fretboard-box fretboard-open"id="2-0" onClick={this.handleClick} data-value = "A">A</div>
-                        <FretboardNote note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
-                        <FretboardNote note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
-                        <FretboardNote note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
-                        <FretboardNote note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
-                        <FretboardNote note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
-                        <FretboardNote note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
-                        <FretboardNote note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
-                        <FretboardNote note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
-                        <FretboardNote note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
-                        <FretboardNote note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
-                        <FretboardNote note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
-                        <FretboardNote note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
         
 
 
                         <div class="fretboard-box fretboard-open"id="3-0"onClick={this.handleClick} data-value = "D">D</div>
-                        <FretboardNote note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
-                        <FretboardNote note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
-                        <FretboardNote note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
-                        <FretboardNote note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
-                        <FretboardNote note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
-                        <FretboardNote note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
-                        <FretboardNote note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
-                        <FretboardNote note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
-                        <FretboardNote note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
-                        <FretboardNote note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
-                        <FretboardNote note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
-                        <FretboardNote note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
       
 
 
 
 
                         <div class="fretboard-box fretboard-open"id="4-0"onClick={this.handleClick} data-value = "G">G</div>
-                        <FretboardNote note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
-                        <FretboardNote note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
-                        <FretboardNote note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
-                        <FretboardNote note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
-                        <FretboardNote note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
-                        <FretboardNote note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
-                        <FretboardNote note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
-                        <FretboardNote note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
-                        <FretboardNote note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
-                        <FretboardNote note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
-                        <FretboardNote note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
-                        <FretboardNote note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
                   
 
 
                         <div class="fretboard-box fretboard-open"id="5-0"onClick={this.handleClick} data-value = "B">B</div>
-                        <FretboardNote note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
-                        <FretboardNote note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
-                        <FretboardNote note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
-                        <FretboardNote note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
-                        <FretboardNote note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
-                        <FretboardNote note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
-                        <FretboardNote note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
-                        <FretboardNote note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
-                        <FretboardNote note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
-                        <FretboardNote note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
-                        <FretboardNote note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
-                        <FretboardNote note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
          
 
 
                         <div data-value = "E" id="1-0" class="fretboard-box fretboard-open">E</div>
-                        <FretboardNote note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
-                        <FretboardNote note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
-                        <FretboardNote note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
-                        <FretboardNote note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
-                        <FretboardNote note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
-                        <FretboardNote note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
-                        <FretboardNote note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
-                        <FretboardNote note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
-                        <FretboardNote note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
-                        <FretboardNote note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
-                        <FretboardNote note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
-                        <FretboardNote note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
 
 
     
                     </div>
                 </div>
                 }
-                <button id="1" onClick={this.handleChange}>Show Fretboard</button>
-                {this.state.clicked  &&
-                <div class="fretboard-wrapper">
-                    <div data-value = "E" class="fretboard-box fretboard-open">E</div>
-                    <div class={this.state.noteColor}>F</div>
-                    <div class={this.state.noteColor}>F#/Gb</div>
-                    <div class={this.state.noteColor}>G</div>
-                    <div class={this.state.noteColor}>G#/Ab</div>
-                    <div class={this.state.noteColor}>A</div>
-                    <div class={this.state.noteColor}>A#/Bb</div>
-                    <div class={this.state.noteColor}>B</div>
-                    <div class={this.state.noteColor}>C</div>
-                    <div class={this.state.noteColor}>C#/Db</div>
-                    <div class={this.state.noteColor}>D</div>
-                    <div class={this.state.noteColor}>D#/Eb</div>
-                    <div class={this.state.noteColor}>E</div>
-
-
-
-                    <div class="fretboard-box fretboard-open">A</div>
-                    <div class={this.state.noteColor}>A#/Bb</div>
-                    <div class={this.state.noteColor}>B</div>
-                    <div class={this.state.noteColor}>C</div>
-                    <div class={this.state.noteColor}>C#/Db</div>
-                    <div class={this.state.noteColor}>D</div>
-                    <div class={this.state.noteColor}>D#/Eb</div>
-                    <div class={this.state.noteColor}>E</div>
-                    <div class={this.state.noteColor}>F</div>
-                    <div class={this.state.noteColor}>F#/Gb</div>
-                    <div class={this.state.noteColor}>G</div>
-                    <div class={this.state.noteColor}>G#/Ab</div>
-                    <div class={this.state.noteColor}>A</div>
-
-
-
-                    <div class="fretboard-box fretboard-open">D</div>
-                    <div class={this.state.noteColor}>D#/Eb</div>
-                    <div class={this.state.noteColor}>E</div>
-                    <div class={this.state.noteColor}>F</div>
-                    <div class={this.state.noteColor}>F#/Gb</div>
-                    <div class={this.state.noteColor}>G</div>
-                    <div class={this.state.noteColor}>G#/Ab</div>
-                    <div class={this.state.noteColor}>A</div>
-                    <div class={this.state.noteColor}>A#/Bb</div>
-                    <div class={this.state.noteColor}>B</div>
-                    <div class={this.state.noteColor}>C</div>
-                    <div class={this.state.noteColor}>C#/Db</div>
-                    <div class={this.state.noteColor}>D</div>
-
-
-                    <div class="fretboard-box fretboard-open">G</div>
-                    <div class={this.state.noteColor}>G#/Ab</div>
-                    <div class={this.state.noteColor}>A</div>
-                    <div class={this.state.noteColor}>A#/Bb</div>
-                    <div class={this.state.noteColor}>B</div>
-                    <div class={this.state.noteColor}>C</div>
-                    <div class={this.state.noteColor}>C#/Db</div>
-                    <div class={this.state.noteColor}>D</div>
-                    <div class={this.state.noteColor}>D#/Eb</div>
-                    <div class={this.state.noteColor}>E</div>
-                    <div class={this.state.noteColor}>F</div>
-                    <div class={this.state.noteColor}>F#/Gb</div>
-                    <div class={this.state.noteColor}>G</div>
-
-
-
-
-                    <div class="fretboard-box fretboard-open">B</div>
-                    <div class={this.state.noteColor}>C</div>
-                    <div class={this.state.noteColor}>C#/Db</div>
-                    <div class={this.state.noteColor}>D</div>
-                    <div class={this.state.noteColor}>D#/Eb</div>
-                    <div class={this.state.noteColor}>E</div>
-                    <div class={this.state.noteColor}>F</div>
-                    <div class={this.state.noteColor}>F#/Gb</div>
-                    <div class={this.state.noteColor}>G</div>
-                    <div class={this.state.noteColor}>G#/Ab</div>
-                    <div class={this.state.noteColor}>A</div>
-                    <div class={this.state.noteColor}>A#/Bb</div>
-                    <div class={this.state.noteColor}>B</div>
-
-
-
-                    <div class="fretboard-box fretboard-open">E</div>
-                    <div class={this.state.noteColor}>F</div>
-                    <div class={this.state.noteColor}>F#/Gb</div>
-                    <div class={this.state.noteColor}>G</div>
-                    <div class={this.state.noteColor}>G#/Ab</div>
-                    <div class={this.state.noteColor}>A</div>
-                    <div class={this.state.noteColor}>A#/Bb</div>
-                    <div class={this.state.noteColor}>B</div>
-                    <div class={this.state.noteColor}>C</div>
-                    <div class={this.state.noteColor}>C#/Db</div>
-                    <div class={this.state.noteColor}>D</div>
-                    <div class={this.state.noteColor}>D#/Eb</div>
-                    <div class={this.state.noteColor}>E</div>
-
-
-  
-                </div>
-                }
             </div>
-         
-        )
+            )
+        }
     }
-}
 export default FretBoard
-
-
-
-/*        const wrapper ={
-            display: "grid",
-            gridTemplateColumns:" 7% 7% 7% 7% 7% 7% 7% 7% 7% 7% 7% 7% 7%",
-            gridTemplateRows:" 12% 12% 12% 12% 12% 12% 12%",
-            gridGap: "5px",
-            backgroundColor:" #fff",
-            color: "#444",
-          }
-          
-          const fretboard-box = {
-            backgroundColor:" #444",
-            color: "#fff",
-            borderRadius:" 5px",
-            padding: "20px",
-            fontSize: "150%",
-          }*/

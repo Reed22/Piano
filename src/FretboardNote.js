@@ -8,6 +8,7 @@ class FretboardNote extends Component {
         super()
         this.state = {
             active : false
+            //displayed : this.props.displayNote
         }
         this.handleClick = this.handleClick.bind(this)
     }
@@ -22,7 +23,7 @@ class FretboardNote extends Component {
 
         return(
             <div id= {this.props.id} onClick= {this.handleClick} /*note={this.props.note}*/ class = {this.state.active ? "fretboard-box-green" : "fretboard-box"}>
-                <p>{/*this.props.note*/}</p>
+                <p>{this.props.displayNote ? this.props.note : " "}</p>
             </div>
          
         )
