@@ -11,14 +11,23 @@ class FretboardNote extends Component {
             //displayed : this.props.displayNote
         }
         this.handleClick = this.handleClick.bind(this)
+        this.componentDidUpdate = this.componentDidUpdate.bind(this)
+
     }
     handleClick(event){
-        console.log("here")  
         if (this.props.currentNote){      
-            this.setState({active : true})
+            this.setState({active : true}
+            ,()=>{console.log("here",this.state.active)})  
+
         }
     }
-     
+    componentDidUpdate(prevProps) {
+        // Typical usage (don't forget to compare props):
+        if (this.props.currentNote != prevProps.currentNote) {
+          this.setState({active:false})
+        }
+      }
+  
     render(){
 
         return(
