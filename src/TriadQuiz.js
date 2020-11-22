@@ -1,5 +1,6 @@
 //WEIRD BUG----- IF YOU CHANGE '==' TO '===' IT DOESN'T WORK
-//to fix: if dupliacte answer replace with non duplicate
+//to fix: if dupliacte answer replace with non duplicate,
+// remove checkmark on answer when new question
 
 import React,  {useState} from 'react'
 import {Component} from 'react'
@@ -29,6 +30,9 @@ class TriadQuiz extends Component {
             seventh: false,
             randomized: false,
             gotCorrectAnswer: false,
+            score : 0,
+            questionNumber: 0,
+            displayScore : false,
             chords : {
                 "C major": ["C","E","G"],
                 "D minor": ["D","F","A"], 
@@ -55,14 +59,12 @@ class TriadQuiz extends Component {
         this.generateQuestion = this.generateQuestion.bind(this)
         this.fillQuestions = this.fillQuestions.bind(this)
         this.handleClick = this.handleClick.bind(this)
-
+        this.showScore = this.showScore.bind(this)
 
     }
     
-    handleClick(event){
+    handleClick(event){   //checks for correct answers 
         const {value} = event.target
-        /*type === "checkbox" ? this.setState({ [name]: checked }) : */
-        //console.log("here",event.target)
         var toCheck = ""
         //create string to check correctness
         for(var i=0;i<this.state.correctAnswer.length;i++){
@@ -73,22 +75,37 @@ class TriadQuiz extends Component {
         }
         //console.log("here2",toCheck)
         this.setState({ chosenAnswer: value },()=>{
-            console.log(toCheck,this.state.chosenAnswer)   // })
+            //console.log(toCheck,this.state.chosenAnswer)    //})
             
             if (toCheck== this.state.chosenAnswer){
-                this.setState({ gotCorrectAnswer:true })
+                this.setState(prevState =>{
+                    return { gotCorrectAnswer:true, score :prevState.score + 1, questionNumber: prevState.questionNumber + 1,chosenAnswer:""}
+                },()=>{
+                    setTimeout(()=> this.generateQuestion(),1000)
+                    
+                })
+            }
+            else
+                {this.setState(prevState =>{
+                return {  questionNumber: prevState.questionNumber + 1,chosenAnswer:""}
+                },()=>{this.generateQuestion()})
             }
         })
     }
     handleChange(event) {
-        console.log("evt    ",event.target.id,"    pld      ", this.state.played)
+        //console.log("evt    ",event.target.id,"    pld      ", this.state.played)
         
         if (event.target.id == 1){
-            console.log(this.state.clicked,"\n")
+            //console.log(this.state.clicked,"\n")
             this.setState(prevState =>{
                 return {
                     clicked: !(prevState.clicked)
                 }
+            },()=>{
+                if (this.state.clicked == true){
+                     this.generateQuestion()
+                }
+                
             })
         }
         else if (event.target.id == 3){
@@ -109,10 +126,16 @@ class TriadQuiz extends Component {
     fillQuestions(chords){
         var i
         var answers = []
+        var questionA =  Object.keys( chords)[Math.floor(Math.random()*Object.keys( chords).length)]
         for (i = 0; i < 3; i++){
             answers[i] =  chords[Object.keys(chords)[Math.floor(Math.random()*Object.keys(chords).length)]]
+            //below - avoid duplicate answers
+            //console.log(questionA ,answers[i])
+            while(chords[questionA] == answers[i]){
+                //console.log(questionA ,answers[i])
+                answers[i] =  chords[Object.keys(chords)[Math.floor(Math.random()*Object.keys(chords).length)]]
+            }
         }
-        var questionA =  Object.keys( chords)[Math.floor(Math.random()*Object.keys( chords).length)]
         this.setState({question:questionA})
         answers.push( chords[questionA])
         if (this.state.randomized === true){
@@ -122,13 +145,17 @@ class TriadQuiz extends Component {
         }
         this.setState({correctAnswer:answers[3]})
         answers = shuffle(answers)
-        console.log(answers)
+        //console.log(answers)
 
 
         return answers
     }
     generateQuestion(event){
-        this.setState({gotCorrectAnswer:false})
+
+        if (this.state.questionNumber < 10){
+            this.setState({gotCorrectAnswer:false})}
+        else{this.setState({gotCorrectAnswer:false,score:0,questionNumber:0})}
+
         var answers = []    
         if(this.state.seventh == false){
             answers = this.fillQuestions(this.state.chords)
@@ -145,8 +172,11 @@ class TriadQuiz extends Component {
                 ansD : answers[2],
             }
         }, ()=> {
-            console.log(this.state,"qstion") 
+           // console.log(this.state,"qstion") 
             })          
+    }
+    showScore(){
+
     }
     render(){
 
@@ -156,11 +186,13 @@ class TriadQuiz extends Component {
                 {
                     this.state.clicked  &&
                     <div>
-                        <button id="2" onClick={this.generateQuestion}>Create Question</button>
+                        <button id="2" onClick={this.generateQuestion}>Reset Question</button>
+                        <div >Score: {this.state.score}/10 -- Question #{1+this.state.questionNumber } </div>
                         <button id="3" onClick={this.handleChange}>Randomize Note Spelling</button>
                         <button id="4" onClick={this.handleChange}>Seventh Chords</button>
                         <div>Which of the following notes compose {this.state.question}</div>
-                        <form>
+                        {!this.state.gotCorrectAnswer &&
+                        <div><form>
                         <br />
                             <label>
                                 <input 
@@ -206,9 +238,9 @@ class TriadQuiz extends Component {
                                 />  {this.state.ansD}
                             </label>
                             <br />
-                        </form>
+                        </form></div>}
                         {this.state.gotCorrectAnswer &&
-                        <header1 id = "5">CORRECT</header1>}
+                        <header id = "5">CORRECT</header>}
                     </div>
                 }
             </div>
