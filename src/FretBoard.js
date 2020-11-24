@@ -37,7 +37,7 @@ class FretBoard extends Component {
         var maximum = 11
         var minimum = 0
         var randomNumber = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum
-        console.log( noteSelector[randomNumber])
+        //console.log( noteSelector[randomNumber])
         this.setState({currentNote: noteSelector[randomNumber],scaleQuiz:false,arpQuiz:true},()=>{console.log(this.state.currentNote)})
     }
     createScaleQuiz(){
@@ -46,18 +46,19 @@ class FretBoard extends Component {
         var minimum = 0
         var randomNumber = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum
         console.log( noteSelector[randomNumber])
-        /*if (noteSelector[randomNumber] == "C"){  scale = CmajPent}
-        else if (noteSelector[randomNumber] == "D"){  scale = ["D","E","F#","A","B"]}
-        else if (noteSelector[randomNumber] == "E"){  scale = ["E","F#","G#","B","C#"]}
-        else if (noteSelector[randomNumber] == "F"){  scale = ["F","G","A","C","D"]}
-        else if (noteSelector[randomNumber] == "G"){  scale = ["G","A","B","D","E"]}
-        else if (noteSelector[randomNumber] == "F"){  scale = ["A","B","C#","E","F#"]}*/
+
+        if (noteSelector[randomNumber] == "C"){  this.setState({currentScale : "CmajPent"})}
+        else if (noteSelector[randomNumber] == "D"){  this.setState({currentScale : "DmajPent"})}
+        else if (noteSelector[randomNumber] == "E"){   this.setState({currentScale : "EmajPent"})}
+        else if (noteSelector[randomNumber] == "F"){   this.setState({currentScale : "FmajPent"})}
+        else if (noteSelector[randomNumber] == "G"){    this.setState({currentScale : "GmajPent"})}
+        else if (noteSelector[randomNumber] == "A"){   this.setState({currentScale : "AmajPent"})}
         
-        this.setState({currentNote: noteSelector[randomNumber],scaleQuiz:true,arpQuiz:false },()=>{console.log(this.state.currentNote, this.state.currentScale)})
+        this.setState({currentNote: noteSelector[randomNumber],scaleQuiz:true,arpQuiz:false }/*,()=>{console.log(this.state.currentNote, this.state.currentScale)}*/)
     
     }
     handleClick(event){
-        console.log(event.target.dataset.value)//.dataValue)
+        //console.log(event.target.dataset.value)//.dataValue)
         if(event.target.dataset.value == this.state.currentNote && !this.state.noteIds.includes(event.target.id) ){
             this.state.noteIds.push(event.target.id)
             this.setState(prevState=>{
@@ -94,9 +95,9 @@ class FretBoard extends Component {
                 return {
                     displayNote :!prevState.displayNote
                 }
-            }, ()=> {
-                console.log(this.state.displayNote,"qstion") 
-            })          
+            }/*, ()=> {
+                //console.log(this.state.displayNote,"qstion") 
+            }*/)          
         
         }
     }
@@ -111,105 +112,105 @@ class FretBoard extends Component {
                 <div>
                     <button id="2" onClick={this.handleChange}>Take Signle Note Quiz</button>
                     <button id="3" onClick={this.handleChange}>Take Penatonic Scale Quiz</button>
-                    <h3 >Click All 6 {this.state.currentNote} Notes on the Fretboard</h3>
+                    <h3 >Click All {this.state.scaleQuiz ? this.state.currentScale : this.state.currentNote} Notes on the Fretboard</h3>
                     <h3>Notes Found = {this.state.noteSelectionCount}</h3>                 
                     <button id="4" onClick={this.handleChange}>Display Notes</button>
                     <div className="fretboard-wrapper">
                         <div data-value = "E" id="1-0" class="fretboard-box fretboard-open">E</div>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="F" currentNote={this.state.currentNote == "F" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="F" currentNote={this.state.currentNote == "F" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
 
 
 
                         <div class="fretboard-box fretboard-open"id="2-0" onClick={this.handleClick} data-value = "A">A</div>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
         
 
 
                         <div class="fretboard-box fretboard-open"id="3-0"onClick={this.handleClick} data-value = "D">D</div>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
       
 
 
 
 
                         <div class="fretboard-box fretboard-open"id="4-0"onClick={this.handleClick} data-value = "G">G</div>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
                   
 
 
                         <div class="fretboard-box fretboard-open"id="5-0"onClick={this.handleClick} data-value = "B">B</div>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
          
 
 
                         <div data-value = "E" id="1-0" class="fretboard-box fretboard-open">E</div>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} scales = {this.state.scaleQuiz} note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
+                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  scales = {this.state.scaleQuiz} note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
 
 
     

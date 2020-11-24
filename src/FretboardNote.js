@@ -10,11 +10,11 @@ class FretboardNote extends Component {
             active : false,
             //displayed : this.props.displayNote
             CmajPent : ["C","D","E","G","A"],
-            DmajPent: ["D","E","F#","A","B"],
-            EmajPent :  ["E","F#","G#","B","C#"],
+            DmajPent: ["D","E","F#/Gb","A","B"],
+            EmajPent :  ["E","F#/Gb","G#/Ab","B","C#/Db"],
             FmajPent : ["F","G","A","C","D"],
             GmajPent : ["G","A","B","D","E"],
-            AmajPent : ["A","B","C#","E","F#"]
+            AmajPent : ["A","B","C#/Db","E","F#/Gb"]
         }
         this.handleClick = this.handleClick.bind(this)
         this.componentDidUpdate = this.componentDidUpdate.bind(this)
@@ -31,35 +31,47 @@ class FretboardNote extends Component {
     }
     componentDidUpdate(prevProps) {
         // Typical usage (don't forget to compare props):
-        if (this.props.currentNote != prevProps.currentNote) {
+        if (this.props.currentScale != prevProps.currentScale || this.props.currentNote != prevProps.currentNote  ) {
           this.setState({active:false})
         }
       }
       noteInScale(){
-        //console.log("yyyyyyyyyy",this.props.scales)
+        console.log(this.props.note,this.props.currentScale)
         if(this.props.scales == true){
-            if (this.props.note == this.state.AmajPent[0]){
-                if (this.state.AmajPent.includes(this.props.note)){this.setState({active:true})}
+            if (this.props.currentScale == "AmajPent"){
+                if (this.state.AmajPent.includes(this.props.note)){
+                    console.log("Amaj")
+                    this.setState({active:true})}
                 else {return false}
             }           
-            else if (this.props.note == this.state.CmajPent[0]){
-                if (this.state.CmajPent.includes(this.props.note)){this.setState({active:true})}
+            else if (this.props.currentScale == "CmajPent"){
+                if (this.state.CmajPent.includes(this.props.note)){
+                    console.log("cmaj")
+                    this.setState({active:true})}
                 else {return false}
                 }  
-            else if (this.props.note == this.state.DmajPent[0]){
-                if (this.state.DmajPent.includes(this.props.note)){this.setState({active:true})}
+            else if (this.props.currentScale == "DmajPent"){
+                    if (this.state.DmajPent.includes(this.props.note)){
+                    console.log("Dmaj")
+                    this.setState({active:true})}
                 else {return false}
                 }  
-            else if (this.props.note == this.state.FmajPent[0]){
-                if (this.state.FmajPent.includes(this.props.note)){this.setState({active:true})}
+            else if (this.props.currentScale == "FmajPent"){
+                if (this.state.FmajPent.includes(this.props.note)){
+                    console.log("Fmaj")
+                    this.setState({active:true})}
                 else {return false}
             }          
-            else if (this.props.note == this.state.GmajPent[0]){
-                if (this.state.GmajPent.includes(this.props.note)){this.setState({active:true})}
+            else if (this.props.currentScale == "GmajPent"){
+                if (this.state.GmajPent.includes(this.props.note)){
+                    console.log("Gmaj")
+                    this.setState({active:true})}
                 else {return false}
             }  
-            else if (this.props.note == this.state.EmajPent[0]){
-                if (this.state.EmajPent.includes(this.props.note)){this.setState({active:true})}
+            if (this.props.currentScale == "EmajPent"){
+                if (this.state.EmajPent.includes(this.props.note)){
+                    console.log("Emaj")
+                    this.setState({active:true})}
                 else {return false}
             } 
         } 
