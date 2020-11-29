@@ -182,7 +182,7 @@ class TriadQuiz extends Component {
 
         return(
             <div>
-                <button id="1" onClick={this.handleChange}>Triad Quiz</button>
+                <button id="1" onClick={this.handleChange}>{this.state.clicked ? "Quit" : "Triad Quiz"}</button>
                 {
                     this.state.clicked  &&
                     <div>
