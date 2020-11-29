@@ -27,13 +27,9 @@ class IntervalQuiz extends Component {
                     questionNumber : 0,
                     score : 0
                 }
+            
             },()=>{
-                if (this.state.clicked == true){
-                    for (var i=0; i < 9; i++){
-                        this.playNote()
-                    }
-                }
-            })
+                this.playNote()})
             //console.log(this.state.clicked)
         }
         else{
@@ -45,7 +41,9 @@ class IntervalQuiz extends Component {
                         questionNumber : (prevState.questionNumber + 1)
                     }
                 }, ()=> {
-                    console.log(this.state,"grd") 
+                    if (this.state.questionNumber < 10){
+                            this.playNote()
+                        }
                     }
                 )
             }
@@ -53,13 +51,12 @@ class IntervalQuiz extends Component {
                 this.setState({
                     grade: "Wrong, answer is "+ String(this.state.played)
                 }, ()=> {
-
-                    console.log(this.state,"grd") 
-        
+                    if (this.state.questionNumber < 10){
+                        this.playNote()
                     }
-                )
+                    console.log("here333")
+                })
             }
-
         }
 
     }
