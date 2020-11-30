@@ -17,7 +17,7 @@ class FretboardNote extends Component {
             AmajPent : ["A","B","C#/Db","E","F#/Gb"]
         }
         this.componentDidUpdate = this.componentDidUpdate.bind(this)
-        this.noteInScale = this.noteInScale.bind(this)
+       // this.noteInScale = this.noteInScale.bind(this)
 
     }
 
@@ -31,7 +31,7 @@ class FretboardNote extends Component {
     render(){
 
         return(
-            <div id= {this.props.id} /*note={this.props.note}*/ class = {this.state.active ? "fretboard-box-green" : "fretboard-box"}>
+            <div id= {this.props.id} onClick = {this.props.onClick}/*note={this.props.note}*/ class = {this.props.isActive ? "fretboard-box-green" : "fretboard-box"}>
                 <p>{this.props.displayNote ? this.props.note : " "}</p>
             </div>
          
