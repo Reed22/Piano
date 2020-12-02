@@ -57,7 +57,7 @@ class IntervalQuiz extends Component {
                     }
                     else{
                         this.setState({grade:"Quiz over. Score "+String(this.state.score) + "/10"})
-                        setTimeout(()=> this.setState({clicked:false}),1500)}
+                        setTimeout(()=> this.setState({clicked:false}),3000)}
                 })
             }
             else{

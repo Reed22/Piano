@@ -1,9 +1,10 @@
 //WEIRD BUG----- IF YOU CHANGE '==' TO '===' IT DOESN'T WORK
-//to fix: if dupliacte answer replace with non duplicate,
-// remove checkmark on answer when new question
+
 
 import React,  {useState} from 'react'
 import {Component} from 'react'
+//import API from "../apis/API";
+
 function     shuffle(a) {
     var j, x, i;
     for (i = a.length - 1; i > 0; i--) {
@@ -25,6 +26,7 @@ class TriadQuiz extends Component {
             ansB: "",
             ansC: "",
             ansD: "",
+            quizOver:false,
             correctAnswer:"",
             chosenAnswer:"",
             seventh: false,
@@ -154,7 +156,27 @@ class TriadQuiz extends Component {
 
         if (this.state.questionNumber < 10){
             this.setState({gotCorrectAnswer:false})}
-        else{this.setState({gotCorrectAnswer:false,score:0,questionNumber:0})}
+        else {
+            /*API.instance
+            .post("/quizzes", 
+            { 
+                score: this.state.score,
+                type: "Triad"
+            },
+            {
+                withCredentials: true
+            })
+            .then((res) => {
+              console.log(res);
+              this.setRedirect()
+            })
+            .catch((error) => {
+              console.log(error);
+            });*/
+            this.setState({quizOver:true})
+            setTimeout(()=>this.setState({gotCorrectAnswer:false,score:0,questionNumber:0,quizOver:false}),3000)
+            
+        }
 
         var answers = []    
         if(this.state.seventh == false){
@@ -186,8 +208,8 @@ class TriadQuiz extends Component {
                 {
                     this.state.clicked  &&
                     <div>
-                        <button id="2" onClick={this.generateQuestion}>Reset Question</button>
-                        <div >Score: {this.state.score}/10 -- Question #{1+this.state.questionNumber } </div>
+                        {this.state.quizOver &&<div> Quiz Over  Score: {this.state.score}/10 </div>}
+                        {!this.state.quizOver && <div >Score: {this.state.score}/10 -- Question #{1+this.state.questionNumber } </div>}
                         <button id="3" onClick={this.handleChange}>Randomize Note Spelling</button>
                         <button id="4" onClick={this.handleChange}>Seventh Chords</button>
                         <div>Which of the following notes compose {this.state.question}</div>

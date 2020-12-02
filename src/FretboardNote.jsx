@@ -32,7 +32,7 @@ class FretboardNote extends Component {
 
         return(
             <div id= {this.props.id} onClick = {this.props.onClick}/*note={this.props.note}*/ class = {this.props.isActive ? "fretboard-box-green" : "fretboard-box"}>
-                <p>{this.props.displayNote ? this.props.note : " "}</p>
+                <p>{this.props.displayNote ? this.props.note : "       "}</p>
             </div>
          
         )

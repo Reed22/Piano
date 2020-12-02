@@ -11,12 +11,14 @@ class FretBoard extends Component {
             grade : null,
             startQuiz:false,
             noteSelectionCount:0,
+            clickCounter : 0,
             currentNote:"",
             noteColor: "fretboard-box",
             noteColorFound : "fretboard-box-green",
             scaleQuiz : false,
             noteQuiz : false,
             displayNote:false,
+            quizOver:false,
             CmajPent : ["C","D","E","G","A"],
             DmajPent: ["D","E","F#/Gb","A","B"],
             EmajPent :  ["E","F#/Gb","G#/Ab","B","C#/Db"],
@@ -146,7 +148,9 @@ class FretBoard extends Component {
                 return {
                     startQuiz: !(prevState.startQuiz), 
                     currentNote:"",
-                    noteSelectionCount:0                 
+                    noteSelectionCount:0,
+                    clickCounter:0,
+                    quizOver : false             
                 }
             })
         }
@@ -154,14 +158,16 @@ class FretBoard extends Component {
             this.revertState()
             this.setState({
                     currentNote:"",
-                    noteSelectionCount:0                 
+                    noteSelectionCount:0 ,
+                    clickCounter:0                
             },()=>{this.createNoteQuiz()})
         }
         else if (event.target.id == 3){
             this.revertState()
             this.setState({
                     currentScale:"",
-                    noteSelectionCount:0
+                    noteSelectionCount:0,
+                    clickCounter:0                
             },()=>{this.createScaleQuiz()})              
         }
         else if (event.target.id == 4){
@@ -173,7 +179,14 @@ class FretBoard extends Component {
         }
     }
     noteInScale(note,idNumber){
+        if (this.state.noteQuiz){
+            if (this.state.clickCounter >= 6){return}
+        }
+        else if (this.state.scaleQuiz){
+            if (this.state.clickCounter >= 30){return}
+        }
         var idNum = "isActive" + idNumber
+        this.setState(prevState => {return { clickCounter : prevState.clickCounter + 1}})
         if(this.state.scaleQuiz == true){
             if (this.state.currentScale == "AmajPent"){
                 if (this.state.AmajPent.includes(note)){
@@ -211,6 +224,12 @@ class FretBoard extends Component {
                 console.log("found me")
                 this.setState(prevState=>{return {[("isActive"+idNumber)]:true,noteSelectionCount : prevState.noteSelectionCount + 1}})}
             }
+        if (this.state.noteQuiz){
+            if (this.state.clickCounter >= 5){this.setState({quizOver:true})}
+        }
+        else if (this.state.scaleQuiz){
+            if (this.state.clickCounter >= 29){this.setState({quizOver:true})}
+        }
 
     }
     revertState() {
@@ -301,10 +320,13 @@ class FretBoard extends Component {
                     {this.state.startQuiz &&
 
                 <div>
-                    <button id="2" onClick={this.handleChange}>Take Signle Note Quiz</button>
+                    <button id="2" onClick={this.handleChange}>Take Single Note Quiz</button>
                     <button id="3" onClick={this.handleChange}>Take Penatonic Scale Quiz</button>
                     <button id="5" onClick={this.handleChange}>Submit Quiz</button>
+                    {this.state.quizOver && <div> You are out of guesses </div>}
                     <div> Score : {this.state.noteSelectionCount}/{this.state.noteQuiz ? 6 : 30}</div>
+                    <div> Guesses Remaining : {(this.state.noteQuiz ? 6 : 30 ) - this.state.clickCounter }</div>
+
                     <h3 >Click All {this.state.scaleQuiz ? this.state.currentScale : this.state.currentNote} Notes on the Fretboard</h3>
                     <h3>Notes Found = {this.state.noteSelectionCount}</h3>                 
                     <button id="4" onClick={this.handleChange}>Display Notes</button>
