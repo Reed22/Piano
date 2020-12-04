@@ -157,7 +157,7 @@ class TriadQuiz extends Component {
         if (this.state.questionNumber < 10){
             this.setState({gotCorrectAnswer:false})}
         else {
-            /*API.instance
+         /*   API.instance
             .post("/quizzes", 
             { 
                 score: this.state.score,
@@ -172,8 +172,8 @@ class TriadQuiz extends Component {
             })
             .catch((error) => {
               console.log(error);
-            });*/
-            this.setState({quizOver:true})
+            });
+            */this.setState({quizOver:true})
             setTimeout(()=>this.setState({gotCorrectAnswer:false,score:0,questionNumber:0,quizOver:false}),3000)
             
         }

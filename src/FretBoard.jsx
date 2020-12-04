@@ -19,6 +19,7 @@ class FretBoard extends Component {
             noteQuiz : false,
             displayNote:false,
             quizOver:false,
+            perfectScore: false,
             CmajPent : ["C","D","E","G","A"],
             DmajPent: ["D","E","F#/Gb","A","B"],
             EmajPent :  ["E","F#/Gb","G#/Ab","B","C#/Db"],
@@ -150,7 +151,10 @@ class FretBoard extends Component {
                     currentNote:"",
                     noteSelectionCount:0,
                     clickCounter:0,
-                    quizOver : false             
+                    quizOver : false,
+                    noteQuiz:false,
+                    scaleQuiz:false,
+                    perfectScore:false  
                 }
             })
         }
@@ -186,6 +190,8 @@ class FretBoard extends Component {
             if (this.state.clickCounter >= 30){return}
         }
         var idNum = "isActive" + idNumber
+        if (this.state[("isActive"+idNumber)] == true){return}
+
         this.setState(prevState => {return { clickCounter : prevState.clickCounter + 1}})
         if(this.state.scaleQuiz == true){
             if (this.state.currentScale == "AmajPent"){
@@ -221,14 +227,25 @@ class FretBoard extends Component {
         } 
         else {
             if(this.state.currentNote ==note){             
-                console.log("found me")
+                //console.log("found me")
                 this.setState(prevState=>{return {[("isActive"+idNumber)]:true,noteSelectionCount : prevState.noteSelectionCount + 1}})}
             }
         if (this.state.noteQuiz){
-            if (this.state.clickCounter >= 5){this.setState({quizOver:true})}
+            if (this.state.clickCounter >= 5){
+                if(this.state.noteSelectionCount == 5){
+                    console.log("score per  ",this.state.noteSelectionCount)
+                    this.setState({quizOver:true,perfectScore:true})}
+                else{
+                    console.log("score   ",this.state.noteSelectionCount)
+                    this.setState({quizOver:true})}
+            }
         }
         else if (this.state.scaleQuiz){
-            if (this.state.clickCounter >= 29){this.setState({quizOver:true})}
+            if (this.state.clickCounter >= 29){
+                if (this.state.noteSelectionCount == 29){this.setState({quizOver:true,perfectScore:true})}
+                else{this.setState({quizOver:true})}
+            }
+            
         }
 
     }
@@ -322,116 +339,121 @@ class FretBoard extends Component {
                 <div>
                     <button id="2" onClick={this.handleChange}>Take Single Note Quiz</button>
                     <button id="3" onClick={this.handleChange}>Take Penatonic Scale Quiz</button>
-                    <button id="5" onClick={this.handleChange}>Submit Quiz</button>
-                    {this.state.quizOver && <div> You are out of guesses </div>}
-                    <div> Score : {this.state.noteSelectionCount}/{this.state.noteQuiz ? 6 : 30}</div>
-                    <div> Guesses Remaining : {(this.state.noteQuiz ? 6 : 30 ) - this.state.clickCounter }</div>
+                    { (this.state.noteQuiz ==true || this.state.scaleQuiz == true) ?
+                        
+                    <div>
+                        <button id="5" onClick={this.handleChange}>Submit Quiz</button>
+                        {this.state.quizOver && <div> {this.state.perfectScore ? "Wow you got a perfect score!!! Please submit the quiz to record your score or quit" : "You are out of guesses please submit the quiz to record your score or quit"}</div>}
+                        <div> Score : {this.state.noteSelectionCount}/{this.state.noteQuiz ? 6 : 30}</div>
+                        <div> Guesses Remaining : {(this.state.noteQuiz ? 6 : 30 ) - this.state.clickCounter }</div>
 
-                    <h3 >Click All {this.state.scaleQuiz ? this.state.currentScale : this.state.currentNote} Notes on the Fretboard</h3>
-                    <h3>Notes Found = {this.state.noteSelectionCount}</h3>                 
-                    <button id="4" onClick={this.handleChange}>Display Notes</button>
-                    <div className="fretboard-wrapper">
-                        <div data-value = "E" id="1-0" class="fretboard-box fretboard-open">E</div>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("F",1)} isActive = {this.state.isActive1} idNumber = "1" scales =  {this.state.scaleQuiz} note="F" currentNote={this.state.currentNote == "F" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("F#/Gb",2)} isActive = {this.state.isActive2} idNumber = "2" scales =  {this.state.scaleQuiz} note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("G",3)} isActive = {this.state.isActive3} idNumber = "3" scales =  {this.state.scaleQuiz} note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("G#/Ab",4)} isActive = {this.state.isActive4} idNumber = "4" scales =  {this.state.scaleQuiz} note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("A",5)} isActive = {this.state.isActive5} idNumber = "5" scales =  {this.state.scaleQuiz} note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("A#/Bb",6)} isActive = {this.state.isActive6} idNumber = "6" scales =  {this.state.scaleQuiz} note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("B",7)} isActive = {this.state.isActive7} idNumber = "7" scales =  {this.state.scaleQuiz} note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("C",8)} isActive = {this.state.isActive8} idNumber = "8" scales =  {this.state.scaleQuiz} note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("C#/Db",9)} isActive = {this.state.isActive9} idNumber = "9" scales =  {this.state.scaleQuiz} note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("D",10)} isActive = {this.state.isActive10} idNumber = "10" scales =  {this.state.scaleQuiz} note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("D#/Eb",11)} isActive = {this.state.isActive11} idNumber = "11" scales =  {this.state.scaleQuiz} note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("E",12)} isActive = {this.state.isActive12} idNumber = "12" scales =  {this.state.scaleQuiz} note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
+                        <h3 >Click All {this.state.scaleQuiz ? this.state.currentScale : this.state.currentNote} Notes on the Fretboard</h3>
+                        <h3>Notes Found = {this.state.noteSelectionCount}</h3>                 
+                        <button id="4" onClick={this.handleChange}>Display Notes</button>
+                        <div className="fretboard-wrapper">
+                            <div data-value = "E" id="1-0" class="fretboard-box fretboard-open">E</div>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("F",1)} isActive = {this.state.isActive1} idNumber = "1" scales =  {this.state.scaleQuiz} note="F" currentNote={this.state.currentNote == "F" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("F#/Gb",2)} isActive = {this.state.isActive2} idNumber = "2" scales =  {this.state.scaleQuiz} note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("G",3)} isActive = {this.state.isActive3} idNumber = "3" scales =  {this.state.scaleQuiz} note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("G#/Ab",4)} isActive = {this.state.isActive4} idNumber = "4" scales =  {this.state.scaleQuiz} note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("A",5)} isActive = {this.state.isActive5} idNumber = "5" scales =  {this.state.scaleQuiz} note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("A#/Bb",6)} isActive = {this.state.isActive6} idNumber = "6" scales =  {this.state.scaleQuiz} note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("B",7)} isActive = {this.state.isActive7} idNumber = "7" scales =  {this.state.scaleQuiz} note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("C",8)} isActive = {this.state.isActive8} idNumber = "8" scales =  {this.state.scaleQuiz} note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("C#/Db",9)} isActive = {this.state.isActive9} idNumber = "9" scales =  {this.state.scaleQuiz} note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("D",10)} isActive = {this.state.isActive10} idNumber = "10" scales =  {this.state.scaleQuiz} note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("D#/Eb",11)} isActive = {this.state.isActive11} idNumber = "11" scales =  {this.state.scaleQuiz} note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("E",12)} isActive = {this.state.isActive12} idNumber = "12" scales =  {this.state.scaleQuiz} note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
 
 
 
-                        <div class="fretboard-box fretboard-open"id="2-0" onClick={this.handleClick} data-value = "A">A</div>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("A#/Bb",13)} isActive = {this.state.isActive13} idNumber = "13" scales =  {this.state.scaleQuiz} note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("B",14)} isActive = {this.state.isActive14} idNumber = "14" scales =  {this.state.scaleQuiz} note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("C",15)} isActive = {this.state.isActive15} idNumber = "15" scales =  {this.state.scaleQuiz} note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("C#/Db",16)} isActive = {this.state.isActive16} idNumber = "16" scales =  {this.state.scaleQuiz} note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("D",17)} isActive = {this.state.isActive17} idNumber = "17" scales =  {this.state.scaleQuiz} note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("D#/Eb",18)} isActive = {this.state.isActive18} idNumber = "18" scales =  {this.state.scaleQuiz} note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("E",19)} isActive = {this.state.isActive19} idNumber = "19" scales =  {this.state.scaleQuiz} note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("F",20)} isActive = {this.state.isActive20} idNumber = "20" scales =  {this.state.scaleQuiz} note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("F#/Gb",21)} isActive = {this.state.isActive21} idNumber = "21" scales =  {this.state.scaleQuiz} note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("G",22)} isActive = {this.state.isActive22} idNumber = "22" scales =  {this.state.scaleQuiz} note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("G#/Ab",23)} isActive = {this.state.isActive23} idNumber = "23" scales =  {this.state.scaleQuiz} note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("A",24)} isActive = {this.state.isActive24} idNumber = "24" scales =  {this.state.scaleQuiz} note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
+                            <div class="fretboard-box fretboard-open"id="2-0" onClick={this.handleClick} data-value = "A">A</div>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("A#/Bb",13)} isActive = {this.state.isActive13} idNumber = "13" scales =  {this.state.scaleQuiz} note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("B",14)} isActive = {this.state.isActive14} idNumber = "14" scales =  {this.state.scaleQuiz} note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("C",15)} isActive = {this.state.isActive15} idNumber = "15" scales =  {this.state.scaleQuiz} note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("C#/Db",16)} isActive = {this.state.isActive16} idNumber = "16" scales =  {this.state.scaleQuiz} note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("D",17)} isActive = {this.state.isActive17} idNumber = "17" scales =  {this.state.scaleQuiz} note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("D#/Eb",18)} isActive = {this.state.isActive18} idNumber = "18" scales =  {this.state.scaleQuiz} note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("E",19)} isActive = {this.state.isActive19} idNumber = "19" scales =  {this.state.scaleQuiz} note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("F",20)} isActive = {this.state.isActive20} idNumber = "20" scales =  {this.state.scaleQuiz} note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("F#/Gb",21)} isActive = {this.state.isActive21} idNumber = "21" scales =  {this.state.scaleQuiz} note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("G",22)} isActive = {this.state.isActive22} idNumber = "22" scales =  {this.state.scaleQuiz} note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("G#/Ab",23)} isActive = {this.state.isActive23} idNumber = "23" scales =  {this.state.scaleQuiz} note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("A",24)} isActive = {this.state.isActive24} idNumber = "24" scales =  {this.state.scaleQuiz} note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
+            
+
+
+                            <div class="fretboard-box fretboard-open"id="3-0"onClick={this.handleClick} data-value = "D">D</div>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("D#/Eb",25)} isActive = {this.state.isActive25} idNumber = "25" scales =  {this.state.scaleQuiz} note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("E",26)} isActive = {this.state.isActive26} idNumber = "26" scales =  {this.state.scaleQuiz} note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("F",27)} isActive = {this.state.isActive27} idNumber = "27" scales =  {this.state.scaleQuiz} note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale('F#/Gb',28)} isActive = {this.state.isActive28} idNumber = "28" scales =  {this.state.scaleQuiz} note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("G",29)} isActive = {this.state.isActive29} idNumber = "29" scales =  {this.state.scaleQuiz} note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("G#/Ab",30)} isActive = {this.state.isActive30} idNumber = "30" scales =  {this.state.scaleQuiz} note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale('A',31)} isActive = {this.state.isActive31} idNumber = "31" scales =  {this.state.scaleQuiz} note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("A#/Bb",32)} isActive = {this.state.isActive32} idNumber = "32" scales =  {this.state.scaleQuiz} note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("B",33)} isActive = {this.state.isActive33} idNumber = "33" scales =  {this.state.scaleQuiz} note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("C",34)} isActive = {this.state.isActive34} idNumber = "34" scales =  {this.state.scaleQuiz} note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("C#/Db",35)} isActive = {this.state.isActive35} idNumber = "35" scales =  {this.state.scaleQuiz} note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("D",36)} isActive = {this.state.isActive36} idNumber = "36" scales =  {this.state.scaleQuiz} note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
         
 
 
-                        <div class="fretboard-box fretboard-open"id="3-0"onClick={this.handleClick} data-value = "D">D</div>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("D#/Eb",25)} isActive = {this.state.isActive25} idNumber = "25" scales =  {this.state.scaleQuiz} note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("E",26)} isActive = {this.state.isActive26} idNumber = "26" scales =  {this.state.scaleQuiz} note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("F",27)} isActive = {this.state.isActive27} idNumber = "27" scales =  {this.state.scaleQuiz} note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale('F#/Gb',28)} isActive = {this.state.isActive28} idNumber = "28" scales =  {this.state.scaleQuiz} note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("G",29)} isActive = {this.state.isActive29} idNumber = "29" scales =  {this.state.scaleQuiz} note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("G#/Ab",30)} isActive = {this.state.isActive30} idNumber = "30" scales =  {this.state.scaleQuiz} note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale('A',31)} isActive = {this.state.isActive31} idNumber = "31" scales =  {this.state.scaleQuiz} note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("A#/Bb",32)} isActive = {this.state.isActive32} idNumber = "32" scales =  {this.state.scaleQuiz} note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("B",33)} isActive = {this.state.isActive33} idNumber = "33" scales =  {this.state.scaleQuiz} note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("C",34)} isActive = {this.state.isActive34} idNumber = "34" scales =  {this.state.scaleQuiz} note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("C#/Db",35)} isActive = {this.state.isActive35} idNumber = "35" scales =  {this.state.scaleQuiz} note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("D",36)} isActive = {this.state.isActive36} idNumber = "36" scales =  {this.state.scaleQuiz} note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
-      
 
 
+                            <div class="fretboard-box fretboard-open"id="4-0"onClick={this.handleClick} data-value = "G">G</div>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("G#/Ab",37)} isActive = {this.state.isActive37} idNumber = "37" scales =  {this.state.scaleQuiz} note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("A",38)} isActive = {this.state.isActive38} idNumber = "38" scales =  {this.state.scaleQuiz} note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("A#/Bb",39)} isActive = {this.state.isActive39} idNumber = "39" scales =  {this.state.scaleQuiz} note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("B",40)} isActive = {this.state.isActive40} idNumber = "40" scales =  {this.state.scaleQuiz} note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("C",41)} isActive = {this.state.isActive41} idNumber = "41" scales =  {this.state.scaleQuiz} note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("C#/Db",42)} isActive = {this.state.isActive42} idNumber = "42" scales =  {this.state.scaleQuiz} note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("D",43)} isActive = {this.state.isActive43} idNumber = "43" scales =  {this.state.scaleQuiz} note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("D#/Eb",44)} isActive = {this.state.isActive44} idNumber = "44" scales =  {this.state.scaleQuiz} note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("E",45)} isActive = {this.state.isActive45} idNumber = "45" scales =  {this.state.scaleQuiz} note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("F",46)} isActive = {this.state.isActive46} idNumber = "46" scales =  {this.state.scaleQuiz} note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("F#/Gb",47)} isActive = {this.state.isActive47} idNumber = "47" scales =  {this.state.scaleQuiz} note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("G",48)} isActive = {this.state.isActive48} idNumber = "48" scales =  {this.state.scaleQuiz} note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
+                    
 
 
-                        <div class="fretboard-box fretboard-open"id="4-0"onClick={this.handleClick} data-value = "G">G</div>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("G#/Ab",37)} isActive = {this.state.isActive37} idNumber = "37" scales =  {this.state.scaleQuiz} note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("A",38)} isActive = {this.state.isActive38} idNumber = "38" scales =  {this.state.scaleQuiz} note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("A#/Bb",39)} isActive = {this.state.isActive39} idNumber = "39" scales =  {this.state.scaleQuiz} note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("B",40)} isActive = {this.state.isActive40} idNumber = "40" scales =  {this.state.scaleQuiz} note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("C",41)} isActive = {this.state.isActive41} idNumber = "41" scales =  {this.state.scaleQuiz} note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("C#/Db",42)} isActive = {this.state.isActive42} idNumber = "42" scales =  {this.state.scaleQuiz} note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("D",43)} isActive = {this.state.isActive43} idNumber = "43" scales =  {this.state.scaleQuiz} note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("D#/Eb",44)} isActive = {this.state.isActive44} idNumber = "44" scales =  {this.state.scaleQuiz} note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("E",45)} isActive = {this.state.isActive45} idNumber = "45" scales =  {this.state.scaleQuiz} note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("F",46)} isActive = {this.state.isActive46} idNumber = "46" scales =  {this.state.scaleQuiz} note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("F#/Gb",47)} isActive = {this.state.isActive47} idNumber = "47" scales =  {this.state.scaleQuiz} note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("G",48)} isActive = {this.state.isActive48} idNumber = "48" scales =  {this.state.scaleQuiz} note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
-                  
+                            <div class="fretboard-box fretboard-open"id="5-0"onClick={this.handleClick} data-value = "B">B</div>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("C",49)} isActive = {this.state.isActive49} idNumber = "49" scales =  {this.state.scaleQuiz} note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("C#/Db",50)} isActive = {this.state.isActive50} idNumber = "50" scales =  {this.state.scaleQuiz} note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("D",51)} isActive = {this.state.isActive51} idNumber = "51" scales =  {this.state.scaleQuiz} note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("D#/Eb",52)} isActive = {this.state.isActive52} idNumber = "52" scales =  {this.state.scaleQuiz} note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("E",53)} isActive = {this.state.isActive53} idNumber = "53" scales =  {this.state.scaleQuiz} note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("F",54)} isActive = {this.state.isActive54} idNumber = "54" scales =  {this.state.scaleQuiz} note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("F#/Gb",55)} isActive = {this.state.isActive55} idNumber = "55" scales =  {this.state.scaleQuiz} note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale('G',56)} isActive = {this.state.isActive56} idNumber = "56" scales =  {this.state.scaleQuiz} note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("G#/Ab",57)} isActive = {this.state.isActive57} idNumber = "57" scales =  {this.state.scaleQuiz} note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("A",58)} isActive = {this.state.isActive58} idNumber = "58" scales =  {this.state.scaleQuiz} note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("A#/Bb",59)} isActive = {this.state.isActive59} idNumber = "59" scales =  {this.state.scaleQuiz} note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale('B',60)} isActive = {this.state.isActive60} idNumber = "60" scales =  {this.state.scaleQuiz} note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
+            
 
 
-                        <div class="fretboard-box fretboard-open"id="5-0"onClick={this.handleClick} data-value = "B">B</div>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("C",49)} isActive = {this.state.isActive49} idNumber = "49" scales =  {this.state.scaleQuiz} note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("C#/Db",50)} isActive = {this.state.isActive50} idNumber = "50" scales =  {this.state.scaleQuiz} note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("D",51)} isActive = {this.state.isActive51} idNumber = "51" scales =  {this.state.scaleQuiz} note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("D#/Eb",52)} isActive = {this.state.isActive52} idNumber = "52" scales =  {this.state.scaleQuiz} note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("E",53)} isActive = {this.state.isActive53} idNumber = "53" scales =  {this.state.scaleQuiz} note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("F",54)} isActive = {this.state.isActive54} idNumber = "54" scales =  {this.state.scaleQuiz} note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("F#/Gb",55)} isActive = {this.state.isActive55} idNumber = "55" scales =  {this.state.scaleQuiz} note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale('G',56)} isActive = {this.state.isActive56} idNumber = "56" scales =  {this.state.scaleQuiz} note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("G#/Ab",57)} isActive = {this.state.isActive57} idNumber = "57" scales =  {this.state.scaleQuiz} note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("A",58)} isActive = {this.state.isActive58} idNumber = "58" scales =  {this.state.scaleQuiz} note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("A#/Bb",59)} isActive = {this.state.isActive59} idNumber = "59" scales =  {this.state.scaleQuiz} note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale('B',60)} isActive = {this.state.isActive60} idNumber = "60" scales =  {this.state.scaleQuiz} note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
-         
+                            <div data-value = "E" id="1-0" class="fretboard-box fretboard-open">E</div>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("F",61)} isActive = {this.state.isActive61} idNumber = "61" scales =  {this.state.scaleQuiz} note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("F#/Gb",62)} isActive = {this.state.isActive62} idNumber = "62" scales =  {this.state.scaleQuiz} note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("G",63)} isActive = {this.state.isActive63} idNumber = "63" scales =  {this.state.scaleQuiz} note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale('G#/Ab',64)} isActive = {this.state.isActive64} idNumber = "64" scales =  {this.state.scaleQuiz} note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("A",65)} isActive = {this.state.isActive65} idNumber = "65" scales =  {this.state.scaleQuiz} note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("A#/Bb",66)} isActive = {this.state.isActive66} idNumber = "66" scales =  {this.state.scaleQuiz} note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("B",67)} isActive = {this.state.isActive67} idNumber = "67" scales =  {this.state.scaleQuiz} note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("C",68)} isActive = {this.state.isActive68} idNumber = "68" scales =  {this.state.scaleQuiz} note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("C#/Db",69)} isActive = {this.state.isActive69} idNumber = "69" scales =  {this.state.scaleQuiz} note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("D",70)} isActive = {this.state.isActive70} idNumber = "70" scales =  {this.state.scaleQuiz} note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("D#/Eb",71)} isActive = {this.state.isActive71} idNumber = "71" scales =  {this.state.scaleQuiz} note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
+                            <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("E",72)} isActive = {this.state.isActive72} idNumber = "72" scales =  {this.state.scaleQuiz} note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
 
 
-                        <div data-value = "E" id="1-0" class="fretboard-box fretboard-open">E</div>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("F",61)} isActive = {this.state.isActive61} idNumber = "61" scales =  {this.state.scaleQuiz} note="F" currentNote ={this.state.currentNote == "F" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("F#/Gb",62)} isActive = {this.state.isActive62} idNumber = "62" scales =  {this.state.scaleQuiz} note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("G",63)} isActive = {this.state.isActive63} idNumber = "63" scales =  {this.state.scaleQuiz} note="G" currentNote ={this.state.currentNote == "G" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale('G#/Ab',64)} isActive = {this.state.isActive64} idNumber = "64" scales =  {this.state.scaleQuiz} note="G#/Ab" currentNote ={this.state.currentNote == "G#/Ab" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("A",65)} isActive = {this.state.isActive65} idNumber = "65" scales =  {this.state.scaleQuiz} note="A" currentNote ={this.state.currentNote == "A" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("A#/Bb",66)} isActive = {this.state.isActive66} idNumber = "66" scales =  {this.state.scaleQuiz} note="A#/Bb" currentNote ={this.state.currentNote == "A#/Bb" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("B",67)} isActive = {this.state.isActive67} idNumber = "67" scales =  {this.state.scaleQuiz} note="B" currentNote ={this.state.currentNote == "B" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("C",68)} isActive = {this.state.isActive68} idNumber = "68" scales =  {this.state.scaleQuiz} note="C" currentNote ={this.state.currentNote == "C" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("C#/Db",69)} isActive = {this.state.isActive69} idNumber = "69" scales =  {this.state.scaleQuiz} note="C#/Db" currentNote ={this.state.currentNote == "C#/Db" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("D",70)} isActive = {this.state.isActive70} idNumber = "70" scales =  {this.state.scaleQuiz} note="D" currentNote ={this.state.currentNote == "D" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("D#/Eb",71)} isActive = {this.state.isActive71} idNumber = "71" scales =  {this.state.scaleQuiz} note="D#/Eb" currentNote ={this.state.currentNote == "D#/Eb" ? true : false}/>
-                        <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("E",72)} isActive = {this.state.isActive72} idNumber = "72" scales =  {this.state.scaleQuiz} note="E" currentNote ={this.state.currentNote == "E" ? true : false}/>
-
-
-    
+        
+                        </div>
                     </div>
+                 : ""}
                 </div>
-            }
+            } 
             </div>
             )
         }
