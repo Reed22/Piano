@@ -1,6 +1,7 @@
 import React,  {useState} from 'react'
 import {Component} from 'react'
 import * as Tone from 'tone'
+import API from "../apis/API";
 
 class IntervalQuiz extends Component {
     constructor() {
@@ -53,11 +54,30 @@ class IntervalQuiz extends Component {
                     }
                 }, ()=> {
                     if (this.state.questionNumber < 10){
-                        setTimeout(()=> this.playNote(),1000)
+                        //setTimeout(()=> this.playNote(),1000)
+						 this.playNote()
                     }
                     else{
-                        this.setState({grade:"Quiz over. Score "+String(this.state.score) + "/10"})
-                        setTimeout(()=> this.setState({clicked:false}),3000)}
+                        //Send Post Request to save quiz
+                        API.instance
+                        .post("/quizzes", 
+                        { 
+                            score: this.state.score,
+                            type: "Interval"
+                        },
+                        {
+                            withCredentials: true
+                        })
+                        .then((res) => {
+                          console.log(res);
+                        })
+                        .catch((error) => {
+                          console.log(error);
+                        });
+                        this.setState({clicked:false})
+						//this.setState({grade:"Quiz over. Score "+String(this.state.score) + "/10"})
+                        //setTimeout(()=> this.setState({clicked:false}),3000)}
+                    }
                 })
             }
             else{
@@ -66,11 +86,30 @@ class IntervalQuiz extends Component {
                     questionNumber : prevState.questionNumber+1}
                 }, ()=> {
                     if (this.state.questionNumber < 10){
-                        setTimeout(()=> this.playNote(),1000)
+                        this.playNote()
+						//setTimeout(()=> this.playNote(),1000)
                     }
                     else{
-                        this.setState({grade:"Quiz over. Score "+String(this.state.score) + "/10"})
-                        setTimeout(()=> this.setState({clicked:false}),1500)}
+                        //Send Post Request to save quiz  -- Quiz over
+                        /*API.instance
+                        .post("/quizzes", 
+                        { 
+                            score: this.state.score,
+                            type: "Interval"
+                        },
+                        {
+                            withCredentials: true
+                        })
+                        .then((res) => {
+                          console.log(res);
+                        })
+                        .catch((error) => {
+                          console.log(error);
+                        });*/
+                        this.setState({clicked:false})
+						//this.setState({grade:"Quiz over. Score "+String(this.state.score) + "/10"})
+                        //setTimeout(()=> this.setState({clicked:false}),1500)}
+                    }                
                 })
             }
         }
@@ -138,14 +177,14 @@ class IntervalQuiz extends Component {
     render(){
         return(
             <div>
-                <button id="14" onClick={this.handleChange}>{this.state.clicked ? "Quit" : "Interval Quiz"}</button>
+                <button class = "quiz-button" id="14" onClick={this.handleChange}>{this.state.clicked ? "Quit" : "Interval Quiz"}</button>
                 {
                     this.state.clicked  &&
                     <div>
-                        <button id="18"onClick={this.handleChange}>Start</button>
-                        <button id="17"onClick={this.handleChange}>Chromatic</button>
-                        <div id="15" >Score: {this.state.score}/10</div>
-                        <div id="16">Question: {this.state.questionNumber}</div>
+                        <button class = "quiz-button"id="18"onClick={this.handleChange}>Start</button>
+                        <button class = "quiz-button"id="17"onClick={this.handleChange}>Chromatic</button>
+                        <div class = "quiz-text" id="15" >Score: {this.state.score}/10</div>
+                        <div class = "quiz-text" id="16">Question: {this.state.questionNumber}</div>
                         <div id="9">{
                             this.state.grade != null && 
                                 this.state.grade
@@ -153,30 +192,30 @@ class IntervalQuiz extends Component {
                         </div>
                         {this.state.chromatic ?
                         <div>
-                            <button id="1" onClick={this.handleChange}>C</button>
-                            <button id="9" onClick={this.handleChange}>C#/Db</button>
-                            <button id="2" onClick={this.handleChange}>D</button>
-                            <button id="10" onClick={this.handleChange}>D#/Eb</button>
-                            <button id="3" onClick={this.handleChange}>E</button>
-                            <button id="4" onClick={this.handleChange}>F</button>
-                            <button id="11" onClick={this.handleChange}>F#/Gb</button>
-                            <button id="5" onClick={this.handleChange}>G</button>
-                            <button id="12" onClick={this.handleChange}>G#/Ab</button>
-                            <button id="6" onClick={this.handleChange}>A</button>
-                            <button id="13" onClick={this.handleChange}>A#/Bb</button>
-                            <button id="7" onClick={this.handleChange}>B</button>
-                            <button id="8" onClick={this.handleChange}>C</button>
+                            <button id="1" onClick={this.handleChange} class = "quiz-button">C</button>
+                            <button id="9" onClick={this.handleChange} class = "quiz-button">C#/Db</button>
+                            <button id="2" onClick={this.handleChange} class = "quiz-button">D</button>
+                            <button id="10" onClick={this.handleChange} class = "quiz-button">D#/Eb</button>
+                            <button id="3" onClick={this.handleChange} class = "quiz-button">E</button>
+                            <button id="4" onClick={this.handleChange} class = "quiz-button">F</button>
+                            <button id="11" onClick={this.handleChange} class = "quiz-button">F#/Gb</button>
+                            <button id="5" onClick={this.handleChange} class = "quiz-button">G</button>
+                            <button id="12" onClick={this.handleChange} class = "quiz-button">G#/Ab</button>
+                            <button id="6" onClick={this.handleChange} class = "quiz-button">A</button>
+                            <button id="13" onClick={this.handleChange} class = "quiz-button">A#/Bb</button>
+                            <button id="7" onClick={this.handleChange} class = "quiz-button">B</button>
+                            <button id="8" onClick={this.handleChange} class = "quiz-button">C</button>
                         </div>
                         :
                         <div>
-                        <button id="1" onClick={this.handleChange}>C</button>
-                        <button id="2" onClick={this.handleChange}>D</button>
-                        <button id="3" onClick={this.handleChange}>E</button>
-                        <button id="4" onClick={this.handleChange}>F</button>
-                        <button id="5" onClick={this.handleChange}>G</button>
-                        <button id="6" onClick={this.handleChange}>A</button>
-                        <button id="7" onClick={this.handleChange}>B</button>
-                        <button id="8" onClick={this.handleChange}>C</button>
+                        <button id="1" onClick={this.handleChange} class = "quiz-button">C</button>
+                        <button id="2" onClick={this.handleChange} class = "quiz-button">D</button>
+                        <button id="3" onClick={this.handleChange} class = "quiz-button">E</button>
+                        <button id="4" onClick={this.handleChange} class = "quiz-button">F</button>
+                        <button id="5" onClick={this.handleChange} class = "quiz-button">G</button>
+                        <button id="6" onClick={this.handleChange} class = "quiz-button">A</button>
+                        <button id="7" onClick={this.handleChange} class = "quiz-button">B</button>
+                        <button id="8" onClick={this.handleChange} class = "quiz-button">C</button>
                         </div>}
                     </div>
                 }

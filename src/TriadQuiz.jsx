@@ -3,7 +3,7 @@
 
 import React,  {useState} from 'react'
 import {Component} from 'react'
-//import API from "../apis/API";
+import API from "../apis/API";
 
 function     shuffle(a) {
     var j, x, i;
@@ -83,8 +83,8 @@ class TriadQuiz extends Component {
                 this.setState(prevState =>{
                     return { gotCorrectAnswer:true, score :prevState.score + 1, questionNumber: prevState.questionNumber + 1,chosenAnswer:""}
                 },()=>{
-                    setTimeout(()=> this.generateQuestion(),1000)
-                    
+                    //setTimeout(()=> this.generateQuestion(),1000)
+                    this.generateQuestion()
                 })
             }
             else
@@ -157,7 +157,8 @@ class TriadQuiz extends Component {
         if (this.state.questionNumber < 10){
             this.setState({gotCorrectAnswer:false})}
         else {
-         /*   API.instance
+            //Send post request to save quiz score
+            API.instance
             .post("/quizzes", 
             { 
                 score: this.state.score,
@@ -166,16 +167,12 @@ class TriadQuiz extends Component {
             {
                 withCredentials: true
             })
-            .then((res) => {
-              console.log(res);
-              this.setRedirect()
-            })
             .catch((error) => {
               console.log(error);
             });
-            */this.setState({quizOver:true})
-            setTimeout(()=>this.setState({gotCorrectAnswer:false,score:0,questionNumber:0,quizOver:false}),3000)
-            
+            this.setState({quizOver:true})
+            this.setState({gotCorrectAnswer:false,score:0,questionNumber:0,quizOver:false}) 
+			//setTimeout(()=>this.setState({gotCorrectAnswer:false,score:0,questionNumber:0,quizOver:false}),3000)
         }
 
         var answers = []    
@@ -204,20 +201,21 @@ class TriadQuiz extends Component {
 
         return(
             <div>
-                <button id="1" onClick={this.handleChange}>{this.state.clicked ? "Quit" : "Triad Quiz"}</button>
+                <button id="1" class = "quiz-button"onClick={this.handleChange}>{this.state.clicked ? "Quit" : "Triad Quiz"}</button>
                 {
                     this.state.clicked  &&
                     <div>
-                        {this.state.quizOver &&<div> Quiz Over  Score: {this.state.score}/10 </div>}
-                        {!this.state.quizOver && <div >Score: {this.state.score}/10 -- Question #{1+this.state.questionNumber } </div>}
-                        <button id="3" onClick={this.handleChange}>Randomize Note Spelling</button>
-                        <button id="4" onClick={this.handleChange}>Seventh Chords</button>
-                        <div>Which of the following notes compose {this.state.question}</div>
+                        {this.state.quizOver &&<div class = "quiz-text"> Quiz Over  Score: {this.state.score}/10 </div>}
+                        {!this.state.quizOver && <div class = "quiz-text">Score: {this.state.score}/10 -- Question #{1+this.state.questionNumber } </div>}
+                        <button id="3"class = "quiz-button" onClick={this.handleChange}>Randomize Note Spelling {this.state.randomized ? "    (On)" : "    (Off)"}</button>
+                        <button class = "quiz-button" id="4" onClick={this.handleChange}>Seventh Chords{this.state.seventh? "    (On)" : "    (Off)"}</button>
+                        <div class = "quiz-text">Which of the following notes compose {this.state.question}</div>
                         {!this.state.gotCorrectAnswer &&
                         <div><form>
                         <br />
                             <label>
                                 <input 
+                                    class = "quiz-radio-item"
                                     id="6"
                                     type="radio" 
                                     name="chosenAnswer"
@@ -230,6 +228,7 @@ class TriadQuiz extends Component {
                             <label>
                                 <input 
                                     id="7"
+                                    class = "quiz-radio-item"
                                     type="radio" 
                                     name="chosenAnswer"
                                     value= {this.state.ansB}
@@ -242,6 +241,7 @@ class TriadQuiz extends Component {
                                 <input 
                                     id="8"
                                     type="radio" 
+                                    class = "quiz-radio-item"
                                     name="chosenAnswer"
                                     value= {this.state.ansC}
                                     checked={this.state.chosenAnswer == this.state.ansC}
@@ -253,6 +253,7 @@ class TriadQuiz extends Component {
                                 <input 
                                     id="9"
                                     type="radio" 
+                                    class = "quiz-radio-item"
                                     name="chosenAnswer"
                                     value= {this.state.ansD}
                                     checked={this.state.chosenAnswer == this.state.ansD}
