@@ -174,7 +174,6 @@ body {
   width: 20px;
   height: 20px;
   border-radius: 100%;
-  font-size: 20px;
   background: rgb(138, 16, 16);
   color: rgb(196, 22, 22);
   font-size: 70%;
@@ -195,15 +194,31 @@ body {
   /*width: 50px;*/
   transition: all 0.5s;
   cursor: pointer;
-  margin: 5px;}
+  margin: 5px;
+
+}
 .quiz-text{
+  
   background: #333;
   color: #ccc;
-  font-size: 70%;
+  font-size: 100%;
+  font-family: tahoma, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 50px 0;
+}
+.fret-text{
+  
+  background: #333;
+  color: #ccc;
+  font-size: 90%;
   font-family: tahoma, sans-serif;
   text-align: center;
   margin: 0;
   padding: 10px 0;
+}
+.quiz-text-radio{
+  font-size: 40px;
 }
 #profile {
   width: 100vw;

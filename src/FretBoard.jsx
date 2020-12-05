@@ -369,24 +369,24 @@ class FretBoard extends Component {
             <div>
                 
 
-                    <button id="1" onClick={this.handleChange}>{this.state.startQuiz ? "Quit" : "Fretboard Quiz"}</button>
+                    <button id="1" class="quiz-button"onClick={this.handleChange}>{this.state.startQuiz ? "Quit" : "Fretboard Quiz"}</button>
                     {this.state.startQuiz &&
 
                 <div>
-                    <button id="2" onClick={this.handleChange}>Take Single Note Quiz</button>
-                    <button id="3" onClick={this.handleChange}>Take Penatonic Scale Quiz</button>
+                    <button id="2" class="quiz-button"onClick={this.handleChange}>Take Single Note Quiz</button>
+                    <button id="3"class="quiz-button" onClick={this.handleChange}>Take Penatonic Scale Quiz</button>
                     { (this.state.noteQuiz ==true || this.state.scaleQuiz == true) ?
                         
                     <div>
-                        <button id="5" onClick={this.handleChange}>Submit Quiz</button>
-                        {this.state.quizOver && <div> {this.state.perfectScore ? "Wow you got a perfect score!!! Please submit the quiz to record your score or quit" : "You are out of guesses please submit the quiz to record your score or quit"}</div>}
-                        <div> Score : {this.state.noteSelectionCount}/{this.state.noteQuiz ? 6 : 30}</div>
-                        <div> Guesses Remaining : {(this.state.noteQuiz ? 6 : 30 ) - this.state.clickCounter }</div>
+                        <button class="quiz-button" id="4" onClick={this.handleChange}>Display Notes</button>
+                        <button class="quiz-button"id="5" onClick={this.handleChange}>Submit Quiz</button>
+                        {this.state.quizOver && <div class="quiz-text"> {this.state.perfectScore ? "Perfect score!!! Please submit the quiz to record your score or quit" : "You are out of guesses please submit the quiz to record your score or quit"}</div>}
+                        <div class="fret-text"> Score : {this.state.noteSelectionCount}/{this.state.noteQuiz ? 6 : 30}</div>
+                        <div class="fret-text"> Guesses Remaining : {(this.state.noteQuiz ? 6 : 30 ) - this.state.clickCounter }</div>
 
-                        <h3 >Click All {this.state.scaleQuiz ? this.state.currentScale : this.state.currentNote} Notes on the Fretboard</h3>
-                        <h3>Notes Found = {this.state.noteSelectionCount}</h3>                 
-                        <button id="4" onClick={this.handleChange}>Display Notes</button>
-                        <div className="fretboard-wrapper">
+                        <h3 class="fret-text">Click All {this.state.scaleQuiz ? this.state.currentScale : this.state.currentNote} Notes on the Fretboard</h3>
+                        <h3 class="fret-text">Notes Found = {this.state.noteSelectionCount}</h3>                 
+                        <div class="fretboard-wrapper">
                             <div data-value = "E" id="1-0" class="fretboard-box fretboard-open">E</div>
                             <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("F",1)} isActive = {this.state.isActive1} idNumber = "1" scales =  {this.state.scaleQuiz} note="F" currentNote={this.state.currentNote == "F" ? true : false}/>
                             <FretBoardNote displayNote={this.state.displayNote} currentScale = {this.state.currentScale}  onClick = {() =>this.noteInScale("F#/Gb",2)} isActive = {this.state.isActive2} idNumber = "2" scales =  {this.state.scaleQuiz} note="F#/Gb" currentNote ={this.state.currentNote == "F#Gb" ? true : false}/>

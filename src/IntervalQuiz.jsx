@@ -13,6 +13,7 @@ class IntervalQuiz extends Component {
             lastQuestion : -1,
             score : 0,
             questionNumber : 0,
+            quizOver:false,
             chromatic:false,
             answerKey : {1:"C",9:"C#/Db",2:"D",10:"D#/Eb",3:"E",4:"F",11:"F#/Gb",5:"G",12:"G#/Ab",6:"A",13:"A#/Bb",7:"B",8:"C"}
         }
@@ -22,96 +23,101 @@ class IntervalQuiz extends Component {
     }
     
     handleChange(event) {
-        //console.log("evt    ",event.target.id,"    pld      ", this.state.answerKey[this.state.played])
+        //reset quiz and exit
         if (event.target.id == 14 ){
             this.setState(prevState =>{
                 return {
                     clicked: !(prevState.clicked),
                     questionNumber : 0,
-                    score : 0
+                    score : 0,
+                    quizOver:false
                 }
             
             })
         }
         else if (event.target.id == 18){
-        this.setState(prevState =>{
-            return {
-                questionNumber : 0,
-                score : 0
+            this.setState(prevState =>{
+                return {
+                    questionNumber : 0,
+                    score : 0
+                }
             }
-        }
-        ,()=>{
-            if (this.state.clicked){this.playNote()}})
+            ,()=>{
+                if (this.state.clicked){this.playNote()}})
         }
         else if (event.target.id == 17){this.setState(prevState=>{return{chromatic:!prevState.chromatic}})}
-        else{
-            if (event.target.id == this.state.played){
-                this.setState(prevState =>{
-                    return {
-                        grade: "Correct!",
-                        score : (prevState.score + 1),
-                        questionNumber : (prevState.questionNumber + 1)
-                    }
-                }, ()=> {
-                    if (this.state.questionNumber < 10){
-                        //setTimeout(()=> this.playNote(),1000)
-						 this.playNote()
-                    }
-                    else{
-                        //Send Post Request to save quiz
-                        API.instance
-                        .post("/quizzes", 
-                        { 
-                            score: this.state.score,
-                            type: "Interval"
-                        },
-                        {
-                            withCredentials: true
-                        })
-                        .then((res) => {
-                          console.log(res);
-                        })
-                        .catch((error) => {
-                          console.log(error);
-                        });
-                        this.setState({clicked:false})
-						//this.setState({grade:"Quiz over. Score "+String(this.state.score) + "/10"})
-                        //setTimeout(()=> this.setState({clicked:false}),3000)}
-                    }
-                })
+        else{//answer checking here
+            if(this.state.questionNumber < 10){
+                if (event.target.id == this.state.played){
+                    this.setState(prevState =>{
+                        return {
+                            grade: "Correct!",
+                            score : (prevState.score + 1),
+                            questionNumber : (prevState.questionNumber + 1)
+                        }
+                    }, ()=> {
+                        if (this.state.questionNumber < 10){
+                            //setTimeout(()=> this.playNote(),1000)
+                            this.playNote()
+                        }
+                        else{
+                            //Send Post Request to save quiz
+                            /*API.instance
+                            .post("/quizzes", 
+                            { 
+                                score: this.state.score,
+                                type: "Interval"
+                            },
+                            {
+                                withCredentials: true
+                            })
+                            .then((res) => {
+                            console.log(res);
+                            })
+                            .catch((error) => {
+                            console.log(error);
+                            });*/
+                            this.setState({quizOver:true})
+                            //this.setState({grade:"Quiz over. Score "+String(this.state.score) + "/10"})
+                            //setTimeout(()=> this.setState({clicked:false}),3000)}
+                        }
+                    })
+                }
+            
+                else{
+                    this.setState(prevState =>{
+                        return {grade: "Wrong, answer is "+ (this.state.answerKey[this.state.played]),
+                        questionNumber : prevState.questionNumber+1}
+                    }, ()=> {
+                        if (this.state.questionNumber < 10){
+                            this.playNote()
+                            //setTimeout(()=> this.playNote(),1000)
+                        }
+                        else{
+                            //Send Post Request to save quiz  -- Quiz over
+                            API.instance
+                            .post("/quizzes", 
+                            { 
+                                score: this.state.score,
+                                type: "Interval"
+                            },
+                            {
+                                withCredentials: true
+                            })
+                            .then((res) => {
+                            console.log(res);
+                            })
+                            .catch((error) => {
+                            console.log(error);
+                            });
+                            this.setState({quizOver:true})
+                            //this.setState({grade:"Quiz over. Score "+String(this.state.score) + "/10"})
+                            //setTimeout(()=> this.setState({clicked:false}),1500)}
+                        }                
+                    })
+                }
             }
-            else{
-                this.setState(prevState =>{
-                    return {grade: "Wrong, answer is "+ (this.state.answerKey[this.state.played]),
-                    questionNumber : prevState.questionNumber+1}
-                }, ()=> {
-                    if (this.state.questionNumber < 10){
-                        this.playNote()
-						//setTimeout(()=> this.playNote(),1000)
-                    }
-                    else{
-                        //Send Post Request to save quiz  -- Quiz over
-                        /*API.instance
-                        .post("/quizzes", 
-                        { 
-                            score: this.state.score,
-                            type: "Interval"
-                        },
-                        {
-                            withCredentials: true
-                        })
-                        .then((res) => {
-                          console.log(res);
-                        })
-                        .catch((error) => {
-                          console.log(error);
-                        });*/
-                        this.setState({clicked:false})
-						//this.setState({grade:"Quiz over. Score "+String(this.state.score) + "/10"})
-                        //setTimeout(()=> this.setState({clicked:false}),1500)}
-                    }                
-                })
-            }
+            else{this.setState({quizOver:true})}
         }
 
     }
@@ -177,19 +183,17 @@ class IntervalQuiz extends Component {
     render(){
         return(
             <div>
+
                 <button class = "quiz-button" id="14" onClick={this.handleChange}>{this.state.clicked ? "Quit" : "Interval Quiz"}</button>
                 {
                     this.state.clicked  &&
+
                     <div>
-                        <button class = "quiz-button"id="18"onClick={this.handleChange}>Start</button>
+                        {this.state.quizOver &&<div class = "quiz-text"> Quiz Over  Score: {this.state.score}/10, click Quit to exit</div>}
+                        <button class = "quiz-button"id="18"onClick={this.handleChange}>Start Quiz</button>
                         <button class = "quiz-button"id="17"onClick={this.handleChange}>Chromatic</button>
-                        <div class = "quiz-text" id="15" >Score: {this.state.score}/10</div>
-                        <div class = "quiz-text" id="16">Question: {this.state.questionNumber}</div>
-                        <div id="9">{
-                            this.state.grade != null && 
-                                this.state.grade
-                            }
-                        </div>
+                        {!this.state.quizOver && <div class = "quiz-text" id="15" >Score: {this.state.score}/10   Question #{1 + this.state.questionNumber}</div>}
+
                         {this.state.chromatic ?
                         <div>
                             <button id="1" onClick={this.handleChange} class = "quiz-button">C</button>

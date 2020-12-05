@@ -101,7 +101,8 @@ class TriadQuiz extends Component {
             //console.log(this.state.clicked,"\n")
             this.setState(prevState =>{
                 return {
-                    clicked: !(prevState.clicked)
+                    clicked: !(prevState.clicked),
+                    gotCorrectAnswer:false,score:0,questionNumber:0,quizOver:false
                 }
             },()=>{
                 if (this.state.clicked == true){
@@ -171,7 +172,7 @@ class TriadQuiz extends Component {
               console.log(error);
             });
             this.setState({quizOver:true})
-            this.setState({gotCorrectAnswer:false,score:0,questionNumber:0,quizOver:false}) 
+            //this.setState({gotCorrectAnswer:false,score:0,questionNumber:0,quizOver:false,clicked:false}) 
 			//setTimeout(()=>this.setState({gotCorrectAnswer:false,score:0,questionNumber:0,quizOver:false}),3000)
         }
 
@@ -205,7 +206,8 @@ class TriadQuiz extends Component {
                 {
                     this.state.clicked  &&
                     <div>
-                        {this.state.quizOver &&<div class = "quiz-text"> Quiz Over  Score: {this.state.score}/10 </div>}
+
+                        {this.state.quizOver &&<div class = "quiz-text"> Quiz Over  Score: {this.state.score}/10, click Quit to exit</div>}
                         {!this.state.quizOver && <div class = "quiz-text">Score: {this.state.score}/10 -- Question #{1+this.state.questionNumber } </div>}
                         <button id="3"class = "quiz-button" onClick={this.handleChange}>Randomize Note Spelling {this.state.randomized ? "    (On)" : "    (Off)"}</button>
                         <button class = "quiz-button" id="4" onClick={this.handleChange}>Seventh Chords{this.state.seventh? "    (On)" : "    (Off)"}</button>
@@ -213,7 +215,7 @@ class TriadQuiz extends Component {
                         {!this.state.gotCorrectAnswer &&
                         <div><form>
                         <br />
-                            <label>
+                            <label class = "quiz-text-radio">
                                 <input 
                                     class = "quiz-radio-item"
                                     id="6"
@@ -223,9 +225,9 @@ class TriadQuiz extends Component {
                                     checked={this.state.chosenAnswer == this.state.ansA}
                                     onChange={this.handleClick}
                                 />  {this.state.ansA}
-                            </label>
+                            </label >
                             <br />
-                            <label>
+                            <label class = "quiz-text-radio">
                                 <input 
                                     id="7"
                                     class = "quiz-radio-item"
@@ -237,7 +239,7 @@ class TriadQuiz extends Component {
                                 />  {this.state.ansB}
                             </label>
                             <br />
-                            <label>
+                            <label class = "quiz-text-radio">
                                 <input 
                                     id="8"
                                     type="radio" 
@@ -249,7 +251,7 @@ class TriadQuiz extends Component {
                                 />  {this.state.ansC}
                             </label>
                             <br/>
-                            <label>
+                            <label class = "quiz-text-radio">
                                 <input 
                                     id="9"
                                     type="radio" 
